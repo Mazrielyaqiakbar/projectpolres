@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Chat - POLRI.DIGITAL</title>
+
+    <!-- Meta Tags -->
+    <meta name="description"
+        content="Layanan Live Chat POLRI.DIGITAL - Bantuan langsung untuk kebutuhan administrasi kepolisian">
+    <meta name="keywords" content="Live Chat, POLRI, Bantuan, Layanan Pelanggan">
+    <meta name="author" content="Kepolisian Negara Republik Indonesia">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-blue: #0066CC;
+            --light-blue: #4D94FF;
+            --neon-blue: #00D4FF;
+            --gold: #FFD700;
+            --dark-blue: #003366;
+            --white: #FFFFFF;
+            --light-gray: #F5F7FA;
+            --medium-gray: #E1E8ED;
+            --dark-gray: #333333;
+            --success: #00C853;
+            --warning: #FFBB33;
+            --danger: #FF4444;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --neon-glow: 0 0 15px rgba(0, 212, 255, 0.7);
+            --gold-glow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-blue);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--dark-blue);
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4ecf7 100%);
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: var(--light-blue);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.3;
+            }
+
+            90% {
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .neon-waves {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(0deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 212, 255, 0) 100%);
+            z-index: -1;
+            animation: waves 10s infinite linear;
+        }
+
+        @keyframes waves {
+            0% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(-25px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* Chat Container */
+        .chat-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Chat Header */
+        .chat-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .chat-header .brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+        }
+
+        .chat-header .brand i {
+            margin-right: 10px;
+            color: var(--primary-blue);
+        }
+
+        .chat-header .back-btn {
+            background: none;
+            border: none;
+            color: var(--primary-blue);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .chat-header .back-btn:hover {
+            color: var(--dark-blue);
+            transform: translateX(-5px);
+        }
+
+        .chat-header .status-badge {
+            background: var(--success);
+            color: var(--white);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(0, 200, 83, 0.3);
+        }
+
+        .chat-header .status-badge i {
+            margin-right: 5px;
+            font-size: 0.7rem;
+        }
+
+        /* Chat Main */
+        .chat-main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            margin-top: 70px;
+        }
+
+        /* Chat Sidebar */
+        .chat-sidebar {
+            width: 30%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .chat-search {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-search input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(0, 102, 204, 0.2);
+            border-radius: 50px;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            background: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .chat-search input:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
+        }
+
+        .chat-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .chat-item {
+            display: flex;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary-blue);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .chat-item:hover {
+            background: rgba(0, 102, 204, 0.05);
+        }
+
+        .chat-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .chat-item.active {
+            background: rgba(0, 102, 204, 0.1);
+        }
+
+        .chat-item.active::before {
+            transform: scaleY(1);
+        }
+
+        .chat-item-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+            box-shadow: var(--neon-glow);
+            position: relative;
+            z-index: 1;
+        }
+
+        .chat-item-content {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .chat-item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--dark-blue);
+        }
+
+        .chat-item-message {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-item-time {
+            font-size: 0.8rem;
+            color: #999;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+
+        /* Chat Conversation */
+        .chat-conversation {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: rgba(245, 247, 250, 0.7);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .chat-conversation-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .chat-conversation-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+            box-shadow: var(--neon-glow);
+        }
+
+        .chat-conversation-name {
+            font-weight: 600;
+            color: var(--dark-blue);
+        }
+
+        .chat-conversation-status {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            max-width: 70%;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            align-items: flex-end;
+        }
+
+        .message.received {
+            align-self: flex-start;
+            align-items: flex-start;
+        }
+
+        .message-bubble {
+            padding: 12px 18px;
+            border-radius: 18px;
+            position: relative;
+            word-wrap: break-word;
+            box-shadow: var(--shadow);
+        }
+
+        .message.sent .message-bubble {
+            background: var(--primary-blue);
+            color: var(--white);
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.received .message-bubble {
+            background: var(--white);
+            color: var(--dark-gray);
+            border-bottom-left-radius: 5px;
+        }
+
+        .message-time {
+            font-size: 0.7rem;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .message.sent .message-time {
+            text-align: right;
+        }
+
+        /* Chat Input */
+        .chat-input {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid rgba(0, 102, 204, 0.2);
+            border-radius: 50px;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            background: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
+        .chat-input input:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
+        }
+
+        .chat-input button {
+            background: var(--primary-blue);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--neon-glow);
+        }
+
+        .chat-input button:hover {
+            background: var(--dark-blue);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 102, 204, 0.5);
+        }
+
+        .chat-input button:active {
+            transform: scale(0.95);
+        }
+
+        /* Empty State */
+        .empty-state {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            color: var(--medium-gray);
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+
+        .empty-state-text {
+            color: var(--dark-gray);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .chat-sidebar {
+                width: 100%;
+                position: absolute;
+                z-index: 10;
+                height: 100%;
+                display: none;
+            }
+
+            .chat-sidebar.active {
+                display: flex;
+            }
+
+            .chat-conversation {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+    <div class="neon-waves"></div>
+
+    <!-- Chat Container -->
+    <div class="chat-container">
+        <!-- Chat Header -->
+        <div class="chat-header">
+            <div style="display: flex; align-items: center;">
+                <a href="informasi.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <div class="brand">
+                    <i class="fas fa-comments"></i>
+                    POLRI<span style="color: var(--neon-blue);">.LIVECHAT</span>
+                </div>
+            </div>
+            <div class="status-badge">
+                <i class="fas fa-circle"></i> Online
+            </div>
+        </div>
+
+        <div class="chat-main">
+            <!-- Chat Sidebar -->
+            <div class="chat-sidebar">
+                <div class="chat-search">
+                    <input type="text" placeholder="Cari percakapan..." id="searchChat">
+                </div>
+                <div class="chat-list" id="chatList">
+                    <div class="chat-item active" data-chat-id="1">
+                        <div class="chat-item-avatar">CS</div>
+                        <div class="chat-item-content">
+                            <div class="chat-item-name">Layanan Pelanggan</div>
+                            <div class="chat-item-message">Halo, ada yang bisa kami bantu?</div>
+                        </div>
+                        <div class="chat-item-time">10:30</div>
+                    </div>
+                    <div class="chat-item" data-chat-id="2">
+                        <div class="chat-item-avatar">SK</div>
+                        <div class="chat-item-content">
+                            <div class="chat-item-name">Layanan SKCK</div>
+                            <div class="chat-item-message">Pengajuan SKCK Anda sedang diproses</div>
+                        </div>
+                        <div class="chat-item-time">Kemarin</div>
+                    </div>
+                    <div class="chat-item" data-chat-id="3">
+                        <div class="chat-item-avatar">SI</div>
+                        <div class="chat-item-content">
+                            <div class="chat-item-name">Layanan SIM</div>
+                            <div class="chat-item-message">Jadwal perpanjangan SIM Anda tersedia</div>
+                        </div>
+                        <div class="chat-item-time">2 hari lalu</div>
+                    </div>
+                    <div class="chat-item" data-chat-id="4">
+                        <div class="chat-item-avatar">BP</div>
+                        <div class="chat-item-content">
+                            <div class="chat-item-name">Layanan BPKB</div>
+                            <div class="chat-item-message">Terima kasih telah menggunakan layanan kami</div>
+                        </div>
+                        <div class="chat-item-time">3 hari lalu</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Conversation -->
+            <div class="chat-conversation" id="chatConversation">
+                <div class="chat-conversation-header">
+                    <div class="chat-conversation-avatar">CS</div>
+                    <div>
+                        <div class="chat-conversation-name">Layanan Pelanggan</div>
+                        <div class="chat-conversation-status">Online - Akan di repon dalam secepatnya</div>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message received">
+                        <div class="message-bubble">
+                            Selamat datang di Live Chat POLRI.DIGITAL. Ada yang bisa kami bantu hari ini?
+                        </div>
+                        <div class="message-time">10:25</div>
+                    </div>
+
+                    <div class="message received">
+                        <div class="message-bubble">
+                            Saya adalah asisten virtual yang siap membantu Anda dengan informasi seputar layanan
+                            POLRI.DIGITAL.
+                        </div>
+                        <div class="message-time">10:26</div>
+                    </div>
+
+                    <div class="message received">
+                        <div class="message-bubble">
+                            Silakan pilih layanan yang Anda butuhkan:
+                            <br>1. SKCK Online
+                            <br>2. SIM Digital
+                            <br>3. BPKB Elektronik
+                            <br>4. STNK Online
+                            <br>5. Izin Keramaian
+                            <br>6. Laporan Kehilangan
+                        </div>
+                        <div class="message-time">10:28</div>
+                    </div>
+                </div>
+
+                <div class="chat-input">
+                    <input type="text" placeholder="Ketik pesan..." id="messageInput">
+                    <button id="sendButton">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize AOS
+            AOS.init({
+                duration: 1000,
+                once: true,
+                easing: 'ease-out-cubic'
+            });
+
+            // Create particles
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                // Random size
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+
+                // Random animation duration
+                const duration = Math.random() * 20 + 10;
+                particle.style.animationDuration = `${duration}s`;
+
+                // Random animation delay
+                const delay = Math.random() * 5;
+                particle.style.animationDelay = `${delay}s`;
+
+                particlesContainer.appendChild(particle);
+            }
+
+            // Elements
+            const chatItems = document.querySelectorAll('.chat-item');
+            const chatMessages = document.getElementById('chatMessages');
+            const messageInput = document.getElementById('messageInput');
+            const sendButton = document.getElementById('sendButton');
+            const searchChat = document.getElementById('searchChat');
+
+            // Chat data
+            const chatData = {
+                1: {
+                    name: 'Layanan Pelanggan',
+                    avatar: 'CS',
+                    status: 'Online - Biasanya merespon dalam 5 menit'
+                },
+                2: {
+                    name: 'Layanan SKCK',
+                    avatar: 'SK',
+                    status: 'Online - Biasanya merespon dalam 10 menit'
+                },
+                3: {
+                    name: 'Layanan SIM',
+                    avatar: 'SI',
+                    status: 'Online - Biasanya merespon dalam 15 menit'
+                },
+                4: {
+                    name: 'Layanan BPKB',
+                    avatar: 'BP',
+                    status: 'Offline - Akan merespon pada jam kerja'
+                }
+            };
+
+            // Handle chat item click
+            chatItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    // Remove active class from all items
+                    chatItems.forEach(i => i.classList.remove('active'));
+
+                    // Add active class to clicked item
+                    this.classList.add('active');
+
+                    // Get chat id
+                    const chatId = this.getAttribute('data-chat-id');
+
+                    // Update conversation header
+                    updateConversationHeader(chatId);
+
+                    // Load chat messages
+                    loadChatMessages(chatId);
+                });
+            });
+
+            // Update conversation header
+            function updateConversationHeader(chatId) {
+                const chat = chatData[chatId];
+                const conversationHeader = document.querySelector('.chat-conversation-header');
+
+                conversationHeader.innerHTML = `
+                    <div class="chat-conversation-avatar">${chat.avatar}</div>
+                    <div>
+                        <div class="chat-conversation-name">${chat.name}</div>
+                        <div class="chat-conversation-status">${chat.status}</div>
+                    </div>
+                `;
+            }
+
+            // Load chat messages
+            function loadChatMessages(chatId) {
+                // Clear current messages
+                chatMessages.innerHTML = '';
+
+                // Add messages based on chat id
+                if (chatId === '1') {
+                    addMessage('received', 'Selamat datang di Live Chat POLRI.DIGITAL. Ada yang bisa kami bantu hari ini?', '10:25');
+                    addMessage('received', 'Saya adalah asisten virtual yang siap membantu Anda dengan informasi seputar layanan POLRI.DIGITAL.', '10:26');
+                    addMessage('received', 'Silakan pilih layanan yang Anda butuhkan:<br>1. SKCK Online<br>2. SIM Digital<br>3. BPKB Elektronik<br>4. STNK Online<br>5. Izin Keramaian<br>6. Laporan Kehilangan', '10:28');
+                } else if (chatId === '2') {
+                    addMessage('received', 'Selamat datang di Layanan SKCK Online. Ada yang bisa kami bantu?', '09:15');
+                    addMessage('sent', 'Saya ingin menanyakan status pengajuan SKCK saya.', '09:20');
+                    addMessage('received', 'Tentu, silakan sebutkan nomor registrasi pengajuan SKCK Anda.', '09:22');
+                } else if (chatId === '3') {
+                    addMessage('received', 'Selamat datang di Layanan SIM Digital. Ada yang bisa kami bantu?', 'Kemarin');
+                    addMessage('sent', 'Saya ingin membuat perpanjangan SIM.', 'Kemarin');
+                    addMessage('received', 'Silakan pilih jenis SIM yang ingin diperpanjang:<br>1. SIM A<br>2. SIM C<br>3. SIM B1<br>4. SIM B2', 'Kemarin');
+                } else if (chatId === '4') {
+                    addMessage('received', 'Selamat datang di Layanan BPKB Elektronik. Ada yang bisa kami bantu?', '3 hari lalu');
+                    addMessage('sent', 'Saya ingin menanyakan proses perubahan nama di BPKB.', '3 hari lalu');
+                    addMessage('received', 'Untuk perubahan nama di BPKB, Anda perlu melengkapi dokumen berikut:<br>1. KTP asli dan fotokopi<br>2. KK asli dan fotokopi<br>3. BPKB asli<br>4. Surat keterangan dari Kelurahan/Desa', '3 hari lalu');
+                }
+            }
+
+            // Add message to chat
+            function addMessage(type, text, time) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${type}`;
+                messageDiv.setAttribute('data-aos', 'fade-up');
+
+                const bubbleDiv = document.createElement('div');
+                bubbleDiv.className = 'message-bubble';
+                bubbleDiv.innerHTML = text;
+
+                const timeDiv = document.createElement('div');
+                timeDiv.className = 'message-time';
+                timeDiv.textContent = time;
+
+                messageDiv.appendChild(bubbleDiv);
+                messageDiv.appendChild(timeDiv);
+
+                chatMessages.appendChild(messageDiv);
+
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // Refresh AOS
+                AOS.refresh();
+            }
+
+            // Send message
+            function sendMessage() {
+                const messageText = messageInput.value.trim();
+
+                if (messageText) {
+                    // Get current time
+                    const now = new Date();
+                    const hours = now.getHours().toString().padStart(2, '0');
+                    const minutes = now.getMinutes().toString().padStart(2, '0');
+                    const timeString = `${hours}:${minutes}`;
+
+                    // Add sent message
+                    addMessage('sent', messageText, timeString);
+
+                    // Clear input
+                    messageInput.value = '';
+
+                    // Simulate response after a delay
+                    setTimeout(() => {
+                        simulateResponse(messageText);
+                    }, 1000);
+                }
+            }
+
+            // Simulate response
+            function simulateResponse(message) {
+                // Get current time
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const timeString = `${hours}:${minutes}`;
+
+                // Simple response logic
+                let response = '';
+
+                if (message.toLowerCase().includes('skck')) {
+                    response = 'Untuk pengajuan SKCK Online, silakan kunjungi halaman pendaftaran dan lengkapi formulir yang tersedia. Proses verifikasi membutuhkan waktu 1-3 hari kerja.';
+                } else if (message.toLowerCase().includes('sim')) {
+                    response = 'Untuk perpanjangan SIM Digital, pastikan Anda telah menyiapkan KTP, SIM lama, dan pas foto. Proses dapat dilakukan secara online melalui portal kami.';
+                } else if (message.toLowerCase().includes('bpkb')) {
+                    response = 'Layanan BPKB Elektronik memudahkan Anda dalam pengurusan dokumen kendaraan. Silakan pilih jenis layanan yang Anda butuhkan di halaman pendaftaran.';
+                } else if (message.toLowerCase().includes('stnk')) {
+                    response = 'Untuk pembayaran pajak dan perpanjangan STNK Online, Anda dapat menggunakan layanan kami dengan mengikuti langkah-langkah di halaman pendaftaran.';
+                } else if (message.toLowerCase().includes('izin') || message.toLowerCase().includes('keramaian')) {
+                    response = 'Pengajuan izin keramaian dapat dilakukan secara online dengan melampirkan dokumen persyaratan. Proses verifikasi membutuhkan waktu 3-5 hari kerja.';
+                } else if (message.toLowerCase().includes('kehilangan')) {
+                    response = 'Untuk melapor kehilangan, silakan lengkapi formulir laporan dengan data diri dan barang yang hilang. Laporan Anda akan segera diproses.';
+                } else if (message.toLowerCase().includes('terima kasih') || message.toLowerCase().includes('thanks')) {
+                    response = 'Sama-sama. Jangan ragu untuk menghubungi kami kembali jika membutuhkan bantuan. Terima kasih telah menggunakan layanan POLRI.DIGITAL.';
+                } else {
+                    response = 'Terima kasih atas pesan Anda. Tim kami akan segera merespon. Jika perlu bantuan segera, silakan hubungi call center kami di +62 21 521 5010.';
+                }
+
+                // Add received message
+                addMessage('received', response, timeString);
+            }
+
+            // Event listeners
+            sendButton.addEventListener('click', sendMessage);
+
+            messageInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Search chat
+            searchChat.addEventListener('input', function () {
+                const searchTerm = this.value.toLowerCase();
+
+                chatItems.forEach(item => {
+                    const name = item.querySelector('.chat-item-name').textContent.toLowerCase();
+
+                    if (name.includes(searchTerm)) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
