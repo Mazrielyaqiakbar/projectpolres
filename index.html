@@ -645,7 +645,7 @@
             line-height: 1.6;
         }
 
-        /* Process Section */
+        /* Process Section - Updated */
         .process {
             padding: 100px 0;
             background: linear-gradient(135deg, #f5f7fa 0%, #e4ecf7 100%);
@@ -660,7 +660,8 @@
 
         .process-steps {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 30px;
             position: relative;
             margin-top: 60px;
         }
@@ -669,52 +670,61 @@
             content: '';
             position: absolute;
             top: 50px;
-            left: 50px;
-            right: 50px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-blue), var(--neon-blue));
+            left: 30px;
+            bottom: 30px;
+            width: 4px;
+            background: linear-gradient(180deg, var(--primary-blue), var(--neon-blue));
             z-index: 1;
         }
 
         .process-step {
-            width: 22%;
-            text-align: center;
+            display: flex;
+            align-items: flex-start;
             position: relative;
             z-index: 2;
+            background: var(--white);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .process-step:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
 
         .step-number {
-            width: 100px;
-            height: 100px;
-            background: var(--white);
+            width: 60px;
+            height: 60px;
+            background: var(--primary-blue);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 24px;
-            box-shadow: var(--shadow);
-            border: 4px solid var(--primary-blue);
+            margin-right: 20px;
+            flex-shrink: 0;
             position: relative;
+            box-shadow: var(--neon-glow);
             transition: all 0.3s ease;
         }
 
         .process-step:hover .step-number {
             transform: scale(1.1);
-            box-shadow: var(--neon-glow);
         }
 
         .step-number span {
-            font-size: 36px;
+            font-size: 24px;
             font-weight: 700;
-            color: var(--primary-blue);
+            color: var(--white);
         }
 
         .step-icon {
             position: absolute;
-            top: -15px;
-            right: -15px;
-            width: 50px;
-            height: 50px;
+            top: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
             background: var(--gold);
             border-radius: 50%;
             display: flex;
@@ -724,20 +734,25 @@
         }
 
         .step-icon i {
-            font-size: 24px;
+            font-size: 16px;
             color: var(--white);
+        }
+
+        .step-content {
+            flex: 1;
         }
 
         .step-title {
             font-size: 20px;
             font-weight: 600;
             color: var(--dark-blue);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .step-description {
             font-size: 16px;
             color: var(--dark-gray);
+            line-height: 1.5;
         }
 
         /* Security Section */
@@ -1341,35 +1356,6 @@
                 max-width: 300px;
             }
 
-            .process-steps {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .process-steps::before {
-                width: 4px;
-                height: calc(100% - 100px);
-                top: 50px;
-                left: 50px;
-                right: auto;
-                background: linear-gradient(180deg, var(--primary-blue), var(--neon-blue));
-            }
-
-            .process-step {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                margin-bottom: 40px;
-            }
-
-            .step-number {
-                margin: 0 30px 0 0;
-            }
-
-            .step-content {
-                text-align: left;
-            }
-
             .security-features {
                 grid-template-columns: 1fr;
             }
@@ -1513,28 +1499,37 @@
                 font-size: 15px;
             }
 
+            .process-steps {
+                gap: 20px;
+            }
+
+            .process-steps::before {
+                left: 20px;
+            }
+
             .process-step {
-                margin-bottom: 30px;
+                padding: 20px;
             }
 
             .step-number {
-                width: 80px;
-                height: 80px;
+                width: 50px;
+                height: 50px;
+                margin-right: 15px;
             }
 
             .step-number span {
-                font-size: 30px;
+                font-size: 20px;
             }
 
             .step-icon {
-                width: 40px;
-                height: 40px;
-                top: -10px;
-                right: -10px;
+                width: 25px;
+                height: 25px;
+                top: -8px;
+                right: -8px;
             }
 
             .step-icon i {
-                font-size: 20px;
+                font-size: 14px;
             }
 
             .step-title {
@@ -1750,7 +1745,7 @@
         </div>
     </section>
 
-    <!-- Process Section -->
+    <!-- Process Section - Updated -->
     <section class="process" id="process">
         <div class="process-container">
             <div class="section-header">
@@ -1766,8 +1761,10 @@
                             <i class="fas fa-user"></i>
                         </div>
                     </div>
-                    <h3 class="step-title">Daftar Akun</h3>
-                    <p class="step-description">Buat akun dengan data diri yang valid untuk mengakses semua layanan</p>
+                    <div class="step-content">
+                        <h3 class="step-title">Daftar Akun</h3>
+                        <p class="step-description">Buat akun dengan data diri yang valid untuk mengakses semua layanan</p>
+                    </div>
                 </div>
                 <div class="process-step" data-aos="fade-up" data-aos-delay="200">
                     <div class="step-number">
@@ -1776,8 +1773,10 @@
                             <i class="fas fa-file-alt"></i>
                         </div>
                     </div>
-                    <h3 class="step-title">Isi Formulir</h3>
-                    <p class="step-description">Lengkapi formulir sesuai dengan layanan yang dibutuhkan</p>
+                    <div class="step-content">
+                        <h3 class="step-title">Isi Formulir</h3>
+                        <p class="step-description">Lengkapi formulir sesuai dengan layanan yang dibutuhkan</p>
+                    </div>
                 </div>
                 <div class="process-step" data-aos="fade-up" data-aos-delay="300">
                     <div class="step-number">
@@ -1786,8 +1785,10 @@
                             <i class="fas fa-upload"></i>
                         </div>
                     </div>
-                    <h3 class="step-title">Upload Dokumen</h3>
-                    <p class="step-description">Unggah dokumen pendukung yang diperlukan untuk verifikasi</p>
+                    <div class="step-content">
+                        <h3 class="step-title">Upload Dokumen</h3>
+                        <p class="step-description">Unggah dokumen pendukung yang diperlukan untuk verifikasi</p>
+                    </div>
                 </div>
                 <div class="process-step" data-aos="fade-up" data-aos-delay="400">
                     <div class="step-number">
@@ -1796,8 +1797,10 @@
                             <i class="fas fa-check-circle"></i>
                         </div>
                     </div>
-                    <h3 class="step-title">Selesai</h3>
-                    <p class="step-description">Dokumen siap diunduh setelah melalui proses verifikasi</p>
+                    <div class="step-content">
+                        <h3 class="step-title">Selesai</h3>
+                        <p class="step-description">Dokumen siap diunduh setelah melalui proses verifikasi</p>
+                    </div>
                 </div>
             </div>
         </div>
