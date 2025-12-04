@@ -1199,6 +1199,46 @@
             transform: translateY(-5px);
         }
 
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+            z-index: 10000;
+            font-size: 16px;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+        }
+
+        .notification.success {
+            background-color: var(--success);
+            color: var(--white);
+        }
+
+        .notification.warning {
+            background-color: var(--warning);
+            color: var(--white);
+        }
+
+        .notification.danger {
+            background-color: var(--danger);
+            color: var(--white);
+        }
+
+        .notification.info {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .navbar-menu {
@@ -1377,7 +1417,7 @@
                     <h2 class="form-title">Formulir Pembuatan SIM Baru</h2>
                     <p class="form-subtitle">Silakan lengkapi data diri Anda dengan benar</p>
                 </div>
-                <div class="form-body">
+                <div class="form-body" id="formBody">
                     <div class="form-steps">
                         <div class="form-step">
                             <div class="step-indicator active" id="step1-indicator">1</div>
@@ -1634,87 +1674,87 @@
                             </button>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Success Message -->
-                    <div class="success-message" id="success-message">
-                        <div class="success-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <h3 class="success-title">Data Berhasil Disimpan!</h3>
-                        <p class="success-description">
-                            Terima kasih telah mengajukan pembuatan SIM baru secara digital. Silakan datang sesuai jadwal yang telah Anda pilih untuk melakukan tes kesehatan, psikologi, dan proses selanjutnya.
-                        </p>
-                        
-                        <div class="status-tracking">
-                            <h3 class="summary-title">Status Proses</h3>
-                            <div class="status-steps">
-                                <div class="status-step completed">
-                                    <div class="status-icon">
-                                        <i class="fas fa-check"></i>
-                                    </div>
-                                    <div class="status-content">
-                                        <div class="status-title">Pendaftaran Online</div>
-                                        <div class="status-description">Data pendaftaran telah berhasil disimpan</div>
-                                        <div class="status-date">Hari ini, 10:30</div>
-                                    </div>
+                <!-- Success Message -->
+                <div class="success-message" id="success-message">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="success-title">Data Berhasil Disimpan!</h3>
+                    <p class="success-description">
+                        Terima kasih telah mengajukan pembuatan SIM baru secara digital. Silakan datang sesuai jadwal yang telah Anda pilih untuk melakukan tes kesehatan, psikologi, dan proses selanjutnya.
+                    </p>
+                    
+                    <div class="status-tracking">
+                        <h3 class="summary-title">Status Proses</h3>
+                        <div class="status-steps">
+                            <div class="status-step completed">
+                                <div class="status-icon">
+                                    <i class="fas fa-check"></i>
                                 </div>
-                                <div class="status-step active">
-                                    <div class="status-icon">
-                                        <i class="fas fa-user-md"></i>
-                                    </div>
-                                    <div class="status-content">
-                                        <div class="status-title">Tes Kesehatan & Psikologi</div>
-                                        <div class="status-description">Menunggu jadwal tes kesehatan dan psikologi</div>
-                                        <div class="status-date">-</div>
-                                    </div>
+                                <div class="status-content">
+                                    <div class="status-title">Pendaftaran Online</div>
+                                    <div class="status-description">Data pendaftaran telah berhasil disimpan</div>
+                                    <div class="status-date">Hari ini, 10:30</div>
                                 </div>
-                                <div class="status-step pending">
-                                    <div class="status-icon">
-                                        <i class="fas fa-clipboard-check"></i>
-                                    </div>
-                                    <div class="status-content">
-                                        <div class="status-title">Verifikasi Data</div>
-                                        <div class="status-description">Verifikasi data dan dokumen oleh petugas</div>
-                                        <div class="status-date">-</div>
-                                    </div>
+                            </div>
+                            <div class="status-step active">
+                                <div class="status-icon">
+                                    <i class="fas fa-user-md"></i>
                                 </div>
-                                <div class="status-step pending">
-                                    <div class="status-icon">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </div>
-                                    <div class="status-content">
-                                        <div class="status-title">Tes Teori & Praktek</div>
-                                        <div class="status-description">Tes teori dan praktek di SATPAS</div>
-                                        <div class="status-date">-</div>
-                                    </div>
+                                <div class="status-content">
+                                    <div class="status-title">Tes Kesehatan & Psikologi</div>
+                                    <div class="status-description">Menunggu jadwal tes kesehatan dan psikologi</div>
+                                    <div class="status-date">-</div>
                                 </div>
-                                <div class="status-step pending">
-                                    <div class="status-icon">
-                                        <i class="fas fa-money-bill-wave"></i>
-                                    </div>
-                                    <div class="status-content">
-                                        <div class="status-title">Pembayaran</div>
-                                        <div class="status-description">Pembayaran biaya pembuatan SIM</div>
-                                        <div class="status-date">-</div>
-                                    </div>
+                            </div>
+                            <div class="status-step pending">
+                                <div class="status-icon">
+                                    <i class="fas fa-clipboard-check"></i>
                                 </div>
-                                <div class="status-step pending">
-                                    <div class="status-icon">
-                                        <i class="fas fa-id-card"></i>
-                                    </div>
-                                    <div class="status-content">
-                                        <div class="status-title">Penerbitan SIM</div>
-                                        <div class="status-description">Pencetakan dan penerbitan SIM</div>
-                                        <div class="status-date">-</div>
-                                    </div>
+                                <div class="status-content">
+                                    <div class="status-title">Verifikasi Data</div>
+                                    <div class="status-description">Verifikasi data dan dokumen oleh petugas</div>
+                                    <div class="status-date">-</div>
+                                </div>
+                            </div>
+                            <div class="status-step pending">
+                                <div class="status-icon">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </div>
+                                <div class="status-content">
+                                    <div class="status-title">Tes Teori & Praktek</div>
+                                    <div class="status-description">Tes teori dan praktek di SATPAS</div>
+                                    <div class="status-date">-</div>
+                                </div>
+                            </div>
+                            <div class="status-step pending">
+                                <div class="status-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="status-content">
+                                    <div class="status-title">Pembayaran</div>
+                                    <div class="status-description">Pembayaran biaya pembuatan SIM</div>
+                                    <div class="status-date">-</div>
+                                </div>
+                            </div>
+                            <div class="status-step pending">
+                                <div class="status-icon">
+                                    <i class="fas fa-id-card"></i>
+                                </div>
+                                <div class="status-content">
+                                    <div class="status-title">Penerbitan SIM</div>
+                                    <div class="status-description">Pencetakan dan penerbitan SIM</div>
+                                    <div class="status-date">-</div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <a href="index.html" class="btn btn-primary" style="margin-top: 30px;">
-                            <i class="fas fa-home"></i> Kembali ke Beranda
-                        </a>
                     </div>
+                    
+                    <button type="button" class="btn btn-primary" onclick="resetForm()" style="margin-top: 30px;">
+                        <i class="fas fa-redo"></i> Isi Formulir Baru
+                    </button>
                 </div>
             </div>
         </div>
@@ -1796,6 +1836,9 @@
     <div class="back-to-top" id="backToTop">
         <i class="fas fa-arrow-up"></i>
     </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -2244,51 +2287,76 @@
             // Simulate form submission
             setTimeout(() => {
                 // Hide form and show success message
-                document.querySelector('.form-body').style.display = 'none';
+                document.getElementById('formBody').style.display = 'none';
                 document.getElementById('success-message').style.display = 'block';
                 
                 // Reset form
                 document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' });
+                
+                // Show success notification
+                showNotification('Data berhasil disimpan!', 'success');
             }, 2000);
         }
 
+        function resetForm() {
+            // Reset form to initial state
+            document.getElementById('formBody').style.display = 'block';
+            document.getElementById('success-message').style.display = 'none';
+            
+            // Reset all form steps
+            document.querySelectorAll('.form-content').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById('step1').classList.add('active');
+            
+            // Reset step indicators
+            document.querySelectorAll('.step-indicator').forEach(indicator => {
+                indicator.classList.remove('active', 'completed');
+            });
+            document.getElementById('step1-indicator').classList.add('active');
+            
+            // Clear all form fields
+            document.querySelectorAll('.form-control').forEach(field => {
+                field.value = '';
+                field.style.borderColor = '';
+            });
+            
+            // Clear radio buttons
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // Clear file uploads
+            document.getElementById('ktp-upload').value = '';
+            document.getElementById('ktp-preview').style.display = 'none';
+            
+            // Clear selected schedule and time
+            document.querySelectorAll('.schedule-day.selected').forEach(day => {
+                day.classList.remove('selected');
+            });
+            document.querySelectorAll('.time-slot.selected').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+            
+            // Clear agreement checkbox
+            document.getElementById('setuju').checked = false;
+            
+            // Scroll to top of form
+            document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth' });
+            
+            // Show notification
+            showNotification('Formulir telah direset, silakan isi kembali', 'info');
+        }
+
         function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.style.position = 'fixed';
-            notification.style.top = '20px';
-            notification.style.left = '50%';
-            notification.style.transform = 'translateX(-50%)';
-            notification.style.padding = '15px 25px';
-            notification.style.borderRadius = '50px';
-            notification.style.boxShadow = 'var(--shadow)';
-            notification.style.zIndex = '10000';
-            notification.style.fontSize = '16px';
-            notification.style.fontWeight = '500';
+            const notification = document.getElementById('notification');
             notification.textContent = message;
-            
-            // Set color based on type
-            if (type === 'success') {
-                notification.style.backgroundColor = 'var(--success)';
-                notification.style.color = 'var(--white)';
-            } else if (type === 'warning') {
-                notification.style.backgroundColor = 'var(--warning)';
-                notification.style.color = 'var(--white)';
-            } else if (type === 'danger') {
-                notification.style.backgroundColor = 'var(--danger)';
-                notification.style.color = 'var(--white)';
-            } else {
-                notification.style.backgroundColor = 'var(--primary-blue)';
-                notification.style.color = 'var(--white)';
-            }
-            
-            document.body.appendChild(notification);
+            notification.className = 'notification';
+            notification.classList.add(type);
+            notification.classList.add('show');
             
             setTimeout(() => {
-                notification.style.opacity = '0';
-                notification.style.transition = 'opacity 0.5s ease';
-                setTimeout(() => {
-                    notification.remove();
-                }, 500);
+                notification.classList.remove('show');
             }, 3000);
         }
     </script>

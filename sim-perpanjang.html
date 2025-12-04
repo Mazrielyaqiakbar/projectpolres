@@ -770,6 +770,119 @@
             margin-right: auto;
         }
 
+        .payment-info {
+            background: rgba(0, 102, 204, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 500px;
+            text-align: left;
+        }
+
+        .payment-info h4 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .payment-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .payment-detail:last-child {
+            margin-bottom: 0;
+            font-weight: 600;
+            color: var(--dark-blue);
+            padding-top: 10px;
+            border-top: 1px solid var(--medium-gray);
+        }
+
+        /* Status Tracking */
+        .status-tracking {
+            margin-top: 30px;
+        }
+
+        .status-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .status-step {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            border-radius: 10px;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .status-step.completed {
+            background: rgba(0, 200, 83, 0.1);
+            border-left: 4px solid var(--success);
+        }
+
+        .status-step.active {
+            background: rgba(0, 102, 204, 0.1);
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .status-step.pending {
+            background: rgba(255, 255, 255, 0.5);
+            border-left: 4px solid var(--medium-gray);
+        }
+
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .status-step.completed .status-icon {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .status-step.active .status-icon {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .status-step.pending .status-icon {
+            background: var(--medium-gray);
+            color: var(--white);
+        }
+
+        .status-content {
+            flex: 1;
+        }
+
+        .status-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .status-description {
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+
+        .status-date {
+            font-size: 12px;
+            color: var(--dark-gray);
+            margin-top: 5px;
+        }
+
         /* Footer */
         .footer {
             background: var(--dark-blue);
@@ -998,6 +1111,46 @@
             transform: translateY(-5px);
         }
 
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: var(--shadow);
+            z-index: 10000;
+            font-size: 16px;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+        }
+
+        .notification.success {
+            background-color: var(--success);
+            color: var(--white);
+        }
+
+        .notification.warning {
+            background-color: var(--warning);
+            color: var(--white);
+        }
+
+        .notification.danger {
+            background-color: var(--danger);
+            color: var(--white);
+        }
+
+        .notification.info {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .navbar-menu {
@@ -1119,7 +1272,9 @@
                 <li><a href="pendaftaran.html" class="active">Layanan</a></li>
                 <li><a href="status.html">Status</a></li>
                 <li><a href="informasi.html">Informasi</a></li>
-                <li><a href="pendaftaran.html" class="btn btn-primary" style="background: var(--primary-blue); color: white; padding: 8px 20px; border-radius: 20px;">Ajukan Sekarang</a></li>
+                <li><a href="pendaftaran.html" class="btn btn-primary"
+                        style="background: var(--primary-blue); color: white; padding: 8px 20px; border-radius: 20px;">Ajukan
+                        Sekarang</a></li>
             </ul>
             <div class="navbar-toggle" id="navbarToggle">
                 <span></span>
@@ -1134,7 +1289,8 @@
         <div class="hero-container">
             <div class="hero-badge">Formulir Perpanjangan SIM Online</div>
             <h1 class="hero-title">Perpanjangan SIM Digital</h1>
-            <p class="hero-subtitle">Isi formulir berikut untuk memperpanjang SIM Anda secara online. Proses cepat, mudah, dan aman.</p>
+            <p class="hero-subtitle">Isi formulir berikut untuk memperpanjang SIM Anda secara online. Proses cepat,
+                mudah, dan aman.</p>
         </div>
     </section>
 
@@ -1146,7 +1302,7 @@
                     <h2 class="form-title">Formulir Perpanjangan SIM</h2>
                     <p class="form-subtitle">Silakan lengkapi data diri Anda dengan benar</p>
                 </div>
-                <div class="form-body">
+                <div class="form-body" id="formBody">
                     <div class="form-steps">
                         <div class="form-step">
                             <div class="step-indicator active" id="step1-indicator">1</div>
@@ -1170,13 +1326,15 @@
                     <div class="form-content active" id="step1">
                         <div class="form-group">
                             <label for="nama-lengkap">Nama Lengkap</label>
-                            <input type="text" id="nama-lengkap" class="form-control" placeholder="Masukkan nama lengkap Anda">
+                            <input type="text" id="nama-lengkap" class="form-control"
+                                placeholder="Masukkan nama lengkap Anda">
                         </div>
                         <div class="form-row">
                             <div class="form-col">
                                 <div class="form-group">
                                     <label for="tempat-lahir">Tempat Lahir</label>
-                                    <input type="text" id="tempat-lahir" class="form-control" placeholder="Masukkan tempat lahir">
+                                    <input type="text" id="tempat-lahir" class="form-control"
+                                        placeholder="Masukkan tempat lahir">
                                 </div>
                             </div>
                             <div class="form-col">
@@ -1192,7 +1350,8 @@
                         </div>
                         <div class="form-group">
                             <label for="alamat">Alamat Lengkap</label>
-                            <textarea id="alamat" class="form-control" rows="3" placeholder="Masukkan alamat lengkap sesuai KTP"></textarea>
+                            <textarea id="alamat" class="form-control" rows="3"
+                                placeholder="Masukkan alamat lengkap sesuai KTP"></textarea>
                         </div>
                         <div class="form-row">
                             <div class="form-col">
@@ -1248,7 +1407,8 @@
                         </div>
                         <div class="form-group">
                             <label for="no-hp">Nomor Handphone</label>
-                            <input type="tel" id="no-hp" class="form-control" placeholder="Masukkan nomor handphone aktif">
+                            <input type="tel" id="no-hp" class="form-control"
+                                placeholder="Masukkan nomor handphone aktif">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -1266,7 +1426,8 @@
                     <div class="form-content" id="step2">
                         <div class="form-group">
                             <label for="no-sim-lama">Nomor SIM Lama</label>
-                            <input type="text" id="no-sim-lama" class="form-control" placeholder="Masukkan nomor SIM yang akan diperpanjang">
+                            <input type="text" id="no-sim-lama" class="form-control"
+                                placeholder="Masukkan nomor SIM yang akan diperpanjang">
                         </div>
                         <div class="form-group">
                             <label for="jenis-sim">Jenis SIM</label>
@@ -1321,7 +1482,8 @@
                         </div>
                         <div class="form-group">
                             <label for="alasan-perpanjang">Alasan Perpanjangan</label>
-                            <textarea id="alasan-perpanjang" class="form-control" rows="3" placeholder="Jelaskan alasan perpanjangan SIM (opsional)"></textarea>
+                            <textarea id="alasan-perpanjang" class="form-control" rows="3"
+                                placeholder="Jelaskan alasan perpanjangan SIM (opsional)"></textarea>
                         </div>
                         <div class="form-actions">
                             <button type="button" class="btn btn-outline" onclick="prevStep(2)">
@@ -1338,7 +1500,8 @@
                         <div class="form-group">
                             <label>Foto KTP</label>
                             <div class="file-upload">
-                                <input type="file" id="ktp-upload" accept="image/*" onchange="previewImage('ktp-upload', 'ktp-preview')">
+                                <input type="file" id="ktp-upload" accept="image/*"
+                                    onchange="previewImage('ktp-upload', 'ktp-preview')">
                                 <div class="file-upload-label">
                                     <div class="file-upload-icon">
                                         <i class="fas fa-cloud-upload-alt"></i>
@@ -1356,7 +1519,8 @@
                         <div class="form-group">
                             <label>Foto SIM Lama</label>
                             <div class="file-upload">
-                                <input type="file" id="sim-upload" accept="image/*" onchange="previewImage('sim-upload', 'sim-preview')">
+                                <input type="file" id="sim-upload" accept="image/*"
+                                    onchange="previewImage('sim-upload', 'sim-preview')">
                                 <div class="file-upload-label">
                                     <div class="file-upload-icon">
                                         <i class="fas fa-cloud-upload-alt"></i>
@@ -1374,7 +1538,8 @@
                         <div class="form-group">
                             <label>Pas Foto Terbaru</label>
                             <div class="file-upload">
-                                <input type="file" id="pasfoto-upload" accept="image/*" onchange="previewImage('pasfoto-upload', 'pasfoto-preview')">
+                                <input type="file" id="pasfoto-upload" accept="image/*"
+                                    onchange="previewImage('pasfoto-upload', 'pasfoto-preview')">
                                 <div class="file-upload-label">
                                     <div class="file-upload-icon">
                                         <i class="fas fa-cloud-upload-alt"></i>
@@ -1392,7 +1557,8 @@
                         <div class="form-group">
                             <label>Surat Keterangan Sehat</label>
                             <div class="file-upload">
-                                <input type="file" id="surat-sehat-upload" accept="image/*,application/pdf" onchange="previewImage('surat-sehat-upload', 'surat-sehat-preview')">
+                                <input type="file" id="surat-sehat-upload" accept="image/*,application/pdf"
+                                    onchange="previewImage('surat-sehat-upload', 'surat-sehat-preview')">
                                 <div class="file-upload-label">
                                     <div class="file-upload-icon">
                                         <i class="fas fa-cloud-upload-alt"></i>
@@ -1475,7 +1641,8 @@
 
                         <div class="form-group">
                             <label>
-                                <input type="checkbox" id="setuju"> Saya menyatakan bahwa data yang saya berikan adalah benar dan dapat dipertanggungjawabkan kebenarannya.
+                                <input type="checkbox" id="setuju"> Saya menyatakan bahwa data yang saya berikan adalah
+                                benar dan dapat dipertanggungjawabkan kebenarannya.
                             </label>
                         </div>
 
@@ -1488,19 +1655,100 @@
                             </button>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Success Message -->
-                    <div class="success-message" id="success-message">
-                        <div class="success-icon">
-                            <i class="fas fa-check-circle"></i>
+                <!-- Success Message -->
+                <div class="success-message" id="success-message">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3 class="success-title">Pengajuan Berhasil!</h3>
+                    <p class="success-description">
+                        Terima kasih telah mengajukan perpanjangan SIM secara digital. Permohonan Anda sedang
+                        diproses dan akan selesai dalam 1-3 hari kerja. Anda akan menerima notifikasi melalui email
+                        dan SMS ketika proses selesai.
+                    </p>
+
+                    <div class="payment-info" id="payment-info">
+                        <h4>Informasi Pembayaran</h4>
+                        <div class="payment-detail">
+                            <span>Metode Pembayaran:</span>
+                            <span id="payment-method">-</span>
                         </div>
-                        <h3 class="success-title">Pengajuan Berhasil!</h3>
-                        <p class="success-description">
-                            Terima kasih telah mengajukan perpanjangan SIM secara digital. Permohonan Anda sedang diproses dan akan selesai dalam 1-3 hari kerja. Anda akan menerima notifikasi melalui email dan SMS ketika proses selesai.
-                        </p>
-                        <a href="index.html" class="btn btn-primary">
-                            <i class="fas fa-home"></i> Kembali ke Beranda
-                        </a>
+                        <div class="payment-detail">
+                            <span>Nomor Transaksi:</span>
+                            <span id="transaction-id">-</span>
+                        </div>
+                        <div class="payment-detail">
+                            <span>Total Pembayaran:</span>
+                            <span id="payment-amount">Rp 120.000</span>
+                        </div>
+                        <div class="payment-detail">
+                            <span>Status Pembayaran:</span>
+                            <span id="payment-status">Berhasil</span>
+                        </div>
+                    </div>
+
+                    <div class="status-tracking">
+                        <h3 class="summary-title">Status Proses</h3>
+                        <div class="status-steps">
+                            <div class="status-step completed">
+                                <div class="status-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="status-content">
+                                    <div class="status-title">Pengajuan Diterima</div>
+                                    <div class="status-description">Pengajuan perpanjangan SIM Anda telah diterima</div>
+                                    <div class="status-date">Hari ini, 10:30</div>
+                                </div>
+                            </div>
+                            <div class="status-step active">
+                                <div class="status-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="status-content">
+                                    <div class="status-title">Verifikasi Dokumen</div>
+                                    <div class="status-description">Dokumen Anda sedang diverifikasi oleh petugas</div>
+                                    <div class="status-date">-</div>
+                                </div>
+                            </div>
+                            <div class="status-step pending">
+                                <div class="status-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="status-content">
+                                    <div class="status-title">Pembayaran</div>
+                                    <div class="status-description">Menunggu pembayaran biaya perpanjangan SIM</div>
+                                    <div class="status-date">-</div>
+                                </div>
+                            </div>
+                            <div class="status-step pending">
+                                <div class="status-icon">
+                                    <i class="fas fa-print"></i>
+                                </div>
+                                <div class="status-content">
+                                    <div class="status-title">Pencetakan SIM</div>
+                                    <div class="status-description">SIM Anda sedang dalam proses pencetakan</div>
+                                    <div class="status-date">-</div>
+                                </div>
+                            </div>
+                            <div class="status-step pending">
+                                <div class="status-icon">
+                                    <i class="fas fa-shipping-fast"></i>
+                                </div>
+                                <div class="status-content">
+                                    <div class="status-title">Pengiriman</div>
+                                    <div class="status-description">SIM akan dikirim ke alamat Anda</div>
+                                    <div class="status-date">-</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px;">
+                        <button type="button" class="btn btn-primary" onclick="finishForm()">
+                            <i class="fas fa-check"></i> Selesai
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1584,6 +1832,9 @@
         <i class="fas fa-arrow-up"></i>
     </div>
 
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -1624,6 +1875,277 @@
 
                 particlesContainer.appendChild(particle);
             }
+
+            // Data kabupaten/kota untuk setiap provinsi
+            const kabupatenData = {
+                aceh: [
+                    "Kabupaten Aceh Barat", "Kabupaten Aceh Barat Daya", "Kabupaten Aceh Besar",
+                    "Kabupaten Aceh Jaya", "Kabupaten Aceh Selatan", "Kabupaten Aceh Singkil",
+                    "Kabupaten Aceh Tamiang", "Kabupaten Aceh Tengah", "Kabupaten Aceh Tenggara",
+                    "Kabupaten Aceh Timur", "Kabupaten Aceh Utara", "Kabupaten Bener Meriah",
+                    "Kabupaten Bireuen", "Kabupaten Gayo Lues", "Kabupaten Nagan Raya",
+                    "Kabupaten Pidie", "Kabupaten Pidie Jaya", "Kabupaten Simeulue",
+                    "Kota Banda Aceh", "Kota Langsa", "Kota Lhokseumawe", "Kota Sabang", "Kota Subulussalam"
+                ],
+                sumut: [
+                    "Kabupaten Asahan", "Kabupaten Batubara", "Kabupaten Dairi",
+                    "Kabupaten Deli Serdang", "Kabupaten Humbang Hasundutan", "Kabupaten Karo",
+                    "Kabupaten Labuhanbatu", "Kabupaten Labuhanbatu Selatan", "Kabupaten Labuhanbatu Utara",
+                    "Kabupaten Langkat", "Kabupaten Mandailing Natal", "Kabupaten Nias",
+                    "Kabupaten Nias Barat", "Kabupaten Nias Selatan", "Kabupaten Nias Utara",
+                    "Kabupaten Padang Lawas", "Kabupaten Padang Lawas Utara", "Kabupaten Pakpak Bharat",
+                    "Kabupaten Samosir", "Kabupaten Serdang Bedagai", "Kabupaten Simalungun",
+                    "Kabupaten Tapanuli Selatan", "Kabupaten Tapanuli Tengah", "Kabupaten Tapanuli Utara",
+                    "Kabupaten Toba", "Kota Binjai", "Kota Gunungsitoli", "Kota Medan",
+                    "Kota Padangsidimpuan", "Kota Pematangsiantar", "Kota Sibolga", "Kota Tanjungbalai", "Kota Tebing Tinggi"
+                ],
+                sumbar: [
+                    "Kabupaten Agam", "Kabupaten Dharmasraya", "Kabupaten Kepulauan Mentawai",
+                    "Kabupaten Lima Puluh Kota", "Kabupaten Padang Pariaman", "Kabupaten Pasaman",
+                    "Kabupaten Pasaman Barat", "Kabupaten Pesisir Selatan", "Kabupaten Sijunjung",
+                    "Kabupaten Solok", "Kabupaten Solok Selatan", "Kabupaten Tanah Datar",
+                    "Kota Bukittinggi", "Kota Padang", "Kota Padangpanjang", "Kota Pariaman",
+                    "Kota Payakumbuh", "Kota Sawahlunto", "Kota Solok"
+                ],
+                riau: [
+                    "Kabupaten Bengkalis", "Kabupaten Indragiri Hilir", "Kabupaten Indragiri Hulu",
+                    "Kabupaten Kampar", "Kabupaten Kepulauan Meranti", "Kabupaten Kuantan Singingi",
+                    "Kabupaten Pelalawan", "Kabupaten Rokan Hilir", "Kabupaten Rokan Hulu",
+                    "Kabupaten Siak", "Kota Dumai", "Kota Pekanbaru"
+                ],
+                jambi: [
+                    "Kabupaten Batanghari", "Kabupaten Bungo", "Kabupaten Kerinci",
+                    "Kabupaten Merangin", "Kabupaten Muaro Jambi", "Kabupaten Sarolangun",
+                    "Kabupaten Tanjung Jabung Barat", "Kabupaten Tanjung Jabung Timur",
+                    "Kabupaten Tebo", "Kota Jambi", "Kota Sungaipenuh"
+                ],
+                sumsel: [
+                    "Kabupaten Banyuasin", "Kabupaten Empat Lawang", "Kabupaten Lahat",
+                    "Kabupaten Muara Enim", "Kabupaten Musi Banyuasin", "Kabupaten Musi Rawas",
+                    "Kabupaten Musi Rawas Utara", "Kabupaten Ogan Ilir", "Kabupaten Ogan Komering Ilir",
+                    "Kabupaten Ogan Komering Ulu", "Kabupaten Ogan Komering Ulu Selatan",
+                    "Kabupaten Ogan Komering Ulu Timur", "Kabupaten Penukal Abab Lematang Ilir",
+                    "Kota Lubuklinggau", "Kota Pagar Alam", "Kota Palembang", "Kota Prabumulih"
+                ],
+                bengkulu: [
+                    "Kabupaten Bengkulu Selatan", "Kabupaten Bengkulu Tengah", "Kabupaten Bengkulu Utara",
+                    "Kabupaten Kaur", "Kabupaten Kepahiang", "Kabupaten Lebong",
+                    "Kabupaten Mukomuko", "Kabupaten Rejang Lebong", "Kabupaten Seluma",
+                    "Kota Bengkulu"
+                ],
+                lampung: [
+                    "Kabupaten Lampung Barat", "Kabupaten Lampung Selatan", "Kabupaten Lampung Tengah",
+                    "Kabupaten Lampung Timur", "Kabupaten Lampung Utara", "Kabupaten Mesuji",
+                    "Kabupaten Pesawaran", "Kabupaten Pesisir Barat", "Kabupaten Pringsewu",
+                    "Kabupaten Tanggamus", "Kabupaten Tulang Bawang", "Kabupaten Tulang Bawang Barat",
+                    "Kabupaten Way Kanan", "Kota Bandar Lampung", "Kota Metro"
+                ],
+                babel: [
+                    "Kabupaten Bangka", "Kabupaten Bangka Barat", "Kabupaten Bangka Selatan",
+                    "Kabupaten Bangka Tengah", "Kabupaten Belitung", "Kabupaten Belitung Timur",
+                    "Kota Pangkal Pinang"
+                ],
+                kepri: [
+                    "Kabupaten Bintan", "Kabupaten Karimun", "Kabupaten Kepulauan Anambas",
+                    "Kabupaten Lingga", "Kabupaten Natuna", "Kota Batam", "Kota Tanjung Pinang"
+                ],
+                dki: [
+                    "Kabupaten Administrasi Kepulauan Seribu", "Kota Administrasi Jakarta Barat",
+                    "Kota Administrasi Jakarta Pusat", "Kota Administrasi Jakarta Selatan",
+                    "Kota Administrasi Jakarta Timur", "Kota Administrasi Jakarta Utara"
+                ],
+                jabar: [
+                    "Kabupaten Bandung", "Kabupaten Bandung Barat", "Kabupaten Bekasi",
+                    "Kabupaten Bogor", "Kabupaten Ciamis", "Kabupaten Cianjur",
+                    "Kabupaten Cirebon", "Kabupaten Garut", "Kabupaten Indramayu",
+                    "Kabupaten Karawang", "Kabupaten Kuningan", "Kabupaten Majalengka",
+                    "Kabupaten Pangandaran", "Kabupaten Purwakarta", "Kabupaten Subang",
+                    "Kabupaten Sukabumi", "Kabupaten Sumedang", "Kabupaten Tasikmalaya",
+                    "Kota Bandung", "Kota Banjar", "Kota Bekasi", "Kota Bogor", "Kota Cimahi",
+                    "Kota Cirebon", "Kota Depok", "Kota Sukabumi", "Kota Tasikmalaya"
+                ],
+                jateng: [
+                    "Kabupaten Banjarnegara", "Kabupaten Banyumas", "Kabupaten Batang",
+                    "Kabupaten Blora", "Kabupaten Boyolali", "Kabupaten Brebes",
+                    "Kabupaten Cilacap", "Kabupaten Demak", "Kabupaten Grobogan",
+                    "Kabupaten Jepara", "Kabupaten Karanganyar", "Kabupaten Kebumen",
+                    "Kabupaten Kendal", "Kabupaten Klaten", "Kabupaten Kudus",
+                    "Kabupaten Magelang", "Kabupaten Pati", "Kabupaten Pekalongan",
+                    "Kabupaten Pemalang", "Kabupaten Purbalingga", "Kabupaten Purworejo",
+                    "Kabupaten Rembang", "Kabupaten Semarang", "Kabupaten Sragen",
+                    "Kabupaten Sukoharjo", "Kabupaten Tegal", "Kabupaten Temanggung",
+                    "Kabupaten Wonogiri", "Kabupaten Wonosobo", "Kota Magelang",
+                    "Kota Pekalongan", "Kota Salatiga", "Kota Semarang", "Kota Surakarta", "Kota Tegal"
+                ],
+                diy: [
+                    "Kabupaten Bantul", "Kabupaten Gunung Kidul", "Kabupaten Kulon Progo",
+                    "Kabupaten Sleman", "Kota Yogyakarta"
+                ],
+                jatim: [
+                    "Kabupaten Bangkalan", "Kabupaten Banyuwangi", "Kabupaten Blitar",
+                    "Kabupaten Bojonegoro", "Kabupaten Bondowoso", "Kabupaten Gresik",
+                    "Kabupaten Jember", "Kabupaten Jombang", "Kabupaten Kediri",
+                    "Kabupaten Lamongan", "Kabupaten Lumajang", "Kabupaten Madiun",
+                    "Kabupaten Magetan", "Kabupaten Malang", "Kabupaten Mojokerto",
+                    "Kabupaten Nganjuk", "Kabupaten Ngawi", "Kabupaten Pacitan",
+                    "Kabupaten Pamekasan", "Kabupaten Pasuruan", "Kabupaten Ponorogo",
+                    "Kabupaten Probolinggo", "Kabupaten Sampang", "Kabupaten Sidoarjo",
+                    "Kabupaten Situbondo", "Kabupaten Sumenep", "Kabupaten Trenggalek",
+                    "Kabupaten Tuban", "Kabupaten Tulungagung", "Kota Batu",
+                    "Kota Blitar", "Kota Kediri", "Kota Madiun", "Kota Malang",
+                    "Kota Mojokerto", "Kota Pasuruan", "Kota Probolinggo", "Kota Surabaya"
+                ],
+                banten: [
+                    "Kabupaten Tangerang", "Kabupaten Serang", "Kabupaten Lebak",
+                    "Kabupaten Pandeglang", "Kota Tangerang", "Kota Cilegon", "Kota Serang",
+                    "Kota Tangerang Selatan"
+                ],
+                bali: [
+                    "Kabupaten Badung", "Kabupaten Bangli", "Kabupaten Buleleng",
+                    "Kabupaten Gianyar", "Kabupaten Jembrana", "Kabupaten Karangasem",
+                    "Kabupaten Klungkung", "Kabupaten Tabanan", "Kota Denpasar"
+                ],
+                ntb: [
+                    "Kabupaten Bima", "Kabupaten Dompu", "Kabupaten Lombok Barat",
+                    "Kabupaten Lombok Tengah", "Kabupaten Lombok Timur", "Kabupaten Lombok Utara",
+                    "Kabupaten Sumbawa", "Kabupaten Sumbawa Barat", "Kota Bima", "Kota Mataram"
+                ],
+                ntt: [
+                    "Kabupaten Alor", "Kabupaten Belu", "Kabupaten Ende",
+                    "Kabupaten Flores Timur", "Kabupaten Kupang", "Kabupaten Lembata",
+                    "Kabupaten Manggarai", "Kabupaten Manggarai Barat", "Kabupaten Manggarai Timur",
+                    "Kabupaten Nagekeo", "Kabupaten Ngada", "Kabupaten Rote Ndao",
+                    "Kabupaten Sabu Raijua", "Kabupaten Sikka", "Kabupaten Sumba Barat",
+                    "Kabupaten Sumba Barat Daya", "Kabupaten Sumba Tengah", "Kabupaten Sumba Timur",
+                    "Kabupaten Timor Tengah Selatan", "Kabupaten Timor Tengah Utara",
+                    "Kota Kupang"
+                ],
+                kalbar: [
+                    "Kabupaten Bengkayang", "Kabupaten Kapuas Hulu", "Kabupaten Kayong Utara",
+                    "Kabupaten Ketapang", "Kabupaten Kubu Raya", "Kabupaten Landak",
+                    "Kabupaten Melawi", "Kabupaten Mempawah", "Kabupaten Pontianak",
+                    "Kabupaten Sambas", "Kabupaten Sanggau", "Kabupaten Sekadau",
+                    "Kabupaten Sintang", "Kota Pontianak", "Kota Singkawang"
+                ],
+                kalteng: [
+                    "Kabupaten Barito Selatan", "Kabupaten Barito Timur", "Kabupaten Barito Utara",
+                    "Kabupaten Gunung Mas", "Kabupaten Kapuas", "Kabupaten Katingan",
+                    "Kabupaten Kotawaringin Barat", "Kabupaten Kotawaringin Timur",
+                    "Kabupaten Lamandau", "Kabupaten Murung Raya", "Kabupaten Pulang Pisau",
+                    "Kabupaten Seruyan", "Kabupaten Sukamara", "Kota Palangka Raya"
+                ],
+                kalsel: [
+                    "Kabupaten Balangan", "Kabupaten Banjar", "Kabupaten Barito Kuala",
+                    "Kabupaten Hulu Sungai Selatan", "Kabupaten Hulu Sungai Tengah",
+                    "Kabupaten Hulu Sungai Utara", "Kabupaten Kotabaru", "Kabupaten Tabalong",
+                    "Kabupaten Tanah Bumbu", "Kabupaten Tanah Laut", "Kabupaten Tapin",
+                    "Kota Banjarbaru", "Kota Banjarmasin"
+                ],
+                kaltim: [
+                    "Kabupaten Berau", "Kabupaten Kutai Barat", "Kabupaten Kutai Kartanegara",
+                    "Kabupaten Kutai Timur", "Kabupaten Mahakam Ulu", "Kabupaten Paser",
+                    "Kabupaten Penajam Paser Utara", "Kota Balikpapan", "Kota Bontang",
+                    "Kota Samarinda"
+                ],
+                kalut: [
+                    "Kabupaten Bulungan", "Kabupaten Malinau", "Kabupaten Nunukan",
+                    "Kabupaten Tana Tidung", "Kota Tarakan"
+                ],
+                sulut: [
+                    "Kabupaten Bolaang Mongondow", "Kabupaten Bolaang Mongondow Selatan",
+                    "Kabupaten Bolaang Mongondow Timur", "Kabupaten Bolaang Mongondow Utara",
+                    "Kabupaten Kepulauan Sangihe", "Kabupaten Kepulauan Siau Tagulandang Biaro",
+                    "Kabupaten Kepulauan Talaud", "Kabupaten Minahasa", "Kabupaten Minahasa Selatan",
+                    "Kabupaten Minahasa Tenggara", "Kabupaten Minahasa Utara", "Kota Bitung",
+                    "Kota Kotamobagu", "Kota Manado", "Kota Tomohon"
+                ],
+                sulteng: [
+                    "Kabupaten Banggai", "Kabupaten Banggai Kepulauan", "Kabupaten Banggai Laut",
+                    "Kabupaten Buol", "Kabupaten Donggala", "Kabupaten Morowali",
+                    "Kabupaten Morowali Utara", "Kabupaten Parigi Moutong", "Kabupaten Poso",
+                    "Kabupaten Sigi", "Kabupaten Tojo Una-Una", "Kabupaten Toli-Toli",
+                    "Kota Palu"
+                ],
+                sulsel: [
+                    "Kabupaten Bantaeng", "Kabupaten Barru", "Kabupaten Bone",
+                    "Kabupaten Bulukumba", "Kabupaten Enrekang", "Kabupaten Gowa",
+                    "Kabupaten Jeneponto", "Kabupaten Kepulauan Selayar", "Kabupaten Luwu",
+                    "Kabupaten Luwu Timur", "Kabupaten Luwu Utara", "Kabupaten Maros",
+                    "Kabupaten Pangkajene dan Kepulauan", "Kabupaten Pinrang",
+                    "Kabupaten Sidenreng Rappang", "Kabupaten Sinjai", "Kabupaten Soppeng",
+                    "Kabupaten Takalar", "Kabupaten Tana Toraja", "Kabupaten Toraja Utara",
+                    "Kabupaten Wajo", "Kota Makassar", "Kota Palopo", "Kota Parepare"
+                ],
+                sultra: [
+                    "Kabupaten Bombana", "Kabupaten Buton", "Kabupaten Buton Selatan",
+                    "Kabupaten Buton Tengah", "Kabupaten Buton Utara", "Kabupaten Kolaka",
+                    "Kabupaten Kolaka Timur", "Kabupaten Kolaka Utara", "Kabupaten Konawe",
+                    "Kabupaten Konawe Kepulauan", "Kabupaten Konawe Selatan", "Kabupaten Konawe Utara",
+                    "Kabupaten Muna", "Kabupaten Muna Barat", "Kabupaten Wakatobi",
+                    "Kota Bau-Bau", "Kota Kendari"
+                ],
+                gorontalo: [
+                    "Kabupaten Boalemo", "Kabupaten Bone Bolango", "Kabupaten Gorontalo",
+                    "Kabupaten Gorontalo Utara", "Kabupaten Pohuwato", "Kota Gorontalo"
+                ],
+                sulbar: [
+                    "Kabupaten Majene", "Kabupaten Mamasa", "Kabupaten Mamuju",
+                    "Kabupaten Mamuju Tengah", "Kabupaten Mamuju Utara", "Kabupaten Polewali Mandar"
+                ],
+                maluku: [
+                    "Kabupaten Buru", "Kabupaten Buru Selatan", "Kabupaten Kepulauan Aru",
+                    "Kabupaten Maluku Barat Daya", "Kabupaten Maluku Tengah", "Kabupaten Maluku Tenggara",
+                    "Kabupaten Maluku Tenggara Barat", "Kabupaten Seram Bagian Barat",
+                    "Kabupaten Seram Bagian Timur", "Kota Ambon", "Kota Tual"
+                ],
+                malut: [
+                    "Kabupaten Halmahera Barat", "Kabupaten Halmahera Tengah", "Kabupaten Halmahera Utara",
+                    "Kabupaten Halmahera Selatan", "Kabupaten Halmahera Timur", "Kabupaten Kepulauan Sula",
+                    "Kabupaten Pulau Morotai", "Kabupaten Pulau Taliabu", "Kota Ternate", "Kota Tidore Kepulauan"
+                ],
+                papua: [
+                    "Kabupaten Asmat", "Kabupaten Biak Numfor", "Kabupaten Boven Digoel",
+                    "Kabupaten Deiyai", "Kabupaten Dogiyai", "Kabupaten Intan Jaya",
+                    "Kabupaten Jayapura", "Kabupaten Jayawijaya", "Kabupaten Keerom",
+                    "Kabupaten Kepulauan Yapen", "Kabupaten Lanny Jaya", "Kabupaten Mamberamo Raya",
+                    "Kabupaten Mamberamo Tengah", "Kabupaten Mappi", "Kabupaten Merauke",
+                    "Kabupaten Mimika", "Kabupaten Nabire", "Kabupaten Nduga",
+                    "Kabupaten Paniai", "Kabupaten Pegunungan Bintang", "Kabupaten Puncak",
+                    "Kabupaten Puncak Jaya", "Kabupaten Sarmi", "Kabupaten Seram Bagian Barat",
+                    "Kabupaten Seram Bagian Timur", "Kabupaten Supiori", "Kabupaten Tolikara",
+                    "Kabupaten Waropen", "Kabupaten Yahukimo", "Kabupaten Yalimo", "Kota Jayapura"
+                ],
+                papbar: [
+                    "Kabupaten Fakfak", "Kabupaten Kaimana", "Kabupaten Manokwari",
+                    "Kabupaten Manokwari Selatan", "Kabupaten Maybrat", "Kabupaten Pegunungan Arfak",
+                    "Kabupaten Raja Ampat", "Kabupaten Sorong", "Kabupaten Sorong Selatan",
+                    "Kabupaten Tambrauw", "Kabupaten Teluk Bintuni", "Kabupaten Teluk Wondama",
+                    "Kota Sorong"
+                ]
+            };
+
+            // Get DOM elements
+            const provinsiSelect = document.getElementById('provinsi');
+            const kabupatenSelect = document.getElementById('kabupaten');
+
+            // Add event listener to provinsi select
+            provinsiSelect.addEventListener('change', function () {
+                // Get selected provinsi value
+                const selectedProvinsi = this.value;
+
+                // Clear kabupaten options
+                kabupatenSelect.innerHTML = '<option value="">Pilih Kabupaten/Kota</option>';
+
+                // If a provinsi is selected, populate kabupaten options
+                if (selectedProvinsi && kabupatenData[selectedProvinsi]) {
+                    kabupatenData[selectedProvinsi].forEach(function (kabupaten) {
+                        const option = document.createElement('option');
+                        option.value = kabupaten.toLowerCase().replace(/\s+/g, '-');
+                        option.textContent = kabupaten;
+                        kabupatenSelect.appendChild(option);
+                    });
+                }
+            });
 
             // Navbar toggle
             const navbarToggle = document.getElementById('navbarToggle');
@@ -1707,7 +2229,7 @@
             // Form validation
             const formInputs = document.querySelectorAll('.form-control');
             formInputs.forEach(input => {
-                input.addEventListener('blur', function() {
+                input.addEventListener('blur', function () {
                     if (this.value.trim() === '') {
                         this.style.borderColor = 'var(--danger)';
                     } else {
@@ -1835,10 +2357,10 @@
             document.getElementById('summary-nama').textContent = document.getElementById('nama-lengkap').value;
             document.getElementById('summary-nik').textContent = document.getElementById('nik').value;
             document.getElementById('summary-sim').textContent = document.getElementById('no-sim-lama').value;
-            
+
             const simType = document.querySelector('input[name="jenis-sim"]:checked');
             document.getElementById('summary-jenis-sim').textContent = simType ? `SIM ${simType.value}` : '-';
-            
+
             const satpas = document.getElementById('satpas');
             document.getElementById('summary-satpas').textContent = satpas.options[satpas.selectedIndex].text;
         }
@@ -1848,23 +2370,26 @@
             document.querySelectorAll('.payment-method').forEach(method => {
                 method.classList.remove('selected');
             });
-            
+
             // Add selected class to clicked method
             element.classList.add('selected');
+
+            // Store selected payment method
+            window.selectedPaymentMethod = method;
         }
 
         function previewImage(inputId, previewId) {
             const input = document.getElementById(inputId);
             const preview = document.getElementById(previewId);
-            
+
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
-                
-                reader.onload = function(e) {
+
+                reader.onload = function (e) {
                     preview.querySelector('img').src = e.target.result;
                     preview.style.display = 'block';
                 }
-                
+
                 reader.readAsDataURL(input.files[0]);
             }
         }
@@ -1876,68 +2401,67 @@
                 showNotification('Silakan centang pernyataan kebenaran data', 'warning');
                 return;
             }
-            
+
             // Validate payment method selection
             const selectedPayment = document.querySelector('.payment-method.selected');
             if (!selectedPayment) {
                 showNotification('Silakan pilih metode pembayaran', 'warning');
                 return;
             }
-            
+
             // Show loading state
             const submitButton = document.querySelector('#step4 .btn-primary');
             const originalText = submitButton.innerHTML;
             submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
             submitButton.disabled = true;
-            
+
             // Simulate form submission
             setTimeout(() => {
+                // Generate transaction ID
+                const transactionId = 'TRX-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+
+                // Set payment information
+                document.getElementById('transaction-id').textContent = transactionId;
+
+                // Set payment method
+                let paymentMethodName = '';
+                if (window.selectedPaymentMethod === 'transfer') {
+                    paymentMethodName = 'Transfer Bank';
+                } else if (window.selectedPaymentMethod === 'ewallet') {
+                    paymentMethodName = 'E-Wallet';
+                } else if (window.selectedPaymentMethod === 'qris') {
+                    paymentMethodName = 'QRIS';
+                } else if (window.selectedPaymentMethod === 'indomaret') {
+                    paymentMethodName = 'Indomaret/Alfamart';
+                }
+                document.getElementById('payment-method').textContent = paymentMethodName;
+
                 // Hide form and show success message
-                document.querySelector('.form-body').style.display = 'none';
+                document.getElementById('formBody').style.display = 'none';
                 document.getElementById('success-message').style.display = 'block';
-                
+
+                // Show success notification
+                showNotification('Pengajuan perpanjangan SIM berhasil dikirim!', 'success');
+
                 // Reset form
                 document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' });
             }, 2000);
         }
 
+        function finishForm() {
+            // Reload the page to start over
+            window.location.reload();
+        }
+
         function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.style.position = 'fixed';
-            notification.style.top = '20px';
-            notification.style.left = '50%';
-            notification.style.transform = 'translateX(-50%)';
-            notification.style.padding = '15px 25px';
-            notification.style.borderRadius = '50px';
-            notification.style.boxShadow = 'var(--shadow)';
-            notification.style.zIndex = '10000';
-            notification.style.fontSize = '16px';
-            notification.style.fontWeight = '500';
+            const notification = document.getElementById('notification');
             notification.textContent = message;
-            
-            // Set color based on type
-            if (type === 'success') {
-                notification.style.backgroundColor = 'var(--success)';
-                notification.style.color = 'var(--white)';
-            } else if (type === 'warning') {
-                notification.style.backgroundColor = 'var(--warning)';
-                notification.style.color = 'var(--white)';
-            } else if (type === 'danger') {
-                notification.style.backgroundColor = 'var(--danger)';
-                notification.style.color = 'var(--white)';
-            } else {
-                notification.style.backgroundColor = 'var(--primary-blue)';
-                notification.style.color = 'var(--white)';
-            }
-            
-            document.body.appendChild(notification);
+            notification.className = 'notification';
+            notification.classList.add(type);
+            notification.classList.add('show');
             
             setTimeout(() => {
-                notification.style.opacity = '0';
-                notification.style.transition = 'opacity 0.5s ease';
-                setTimeout(() => {
-                    notification.remove();
-                }, 500);
+                notification.classList.remove('show');
             }, 3000);
         }
     </script>
