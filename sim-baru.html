@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembuatan SIM Baru Digital - Kepolisian Republik Indonesia</title>
+
+    <!-- Meta Tags -->
+    <meta name="description"
+        content="Formulir pembuatan SIM baru Online - Cepat, aman, dan terpercaya dari Kepolisian Republik Indonesia">
+    <meta name="keywords" content="Pembuatan SIM, SIM Baru, Polri Digital, SIM Digital, Pembuatan SIM Online">
+    <meta name="author" content="Kepolisian Negara Republik Indonesia">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-blue: #0066CC;
+            --light-blue: #4D94FF;
+            --neon-blue: #00D4FF;
+            --gold: #FFD700;
+            --dark-blue: #003366;
+            --white: #FFFFFF;
+            --light-gray: #F5F7FA;
+            --medium-gray: #E1E8ED;
+            --dark-gray: #333333;
+            --success: #00C853;
+            --warning: #FFBB33;
+            --danger: #FF4444;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --neon-glow: 0 0 15px rgba(0, 212, 255, 0.7);
+            --gold-glow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-gray);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-blue);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--dark-blue);
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4ecf7 100%);
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background-color: var(--light-blue);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.3;
+            }
+
+            90% {
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .neon-waves {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(0deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 212, 255, 0) 100%);
+            z-index: -1;
+            animation: waves 10s infinite linear;
+        }
+
+        @keyframes waves {
+            0% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(-25px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .navbar-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            box-shadow: var(--neon-glow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 102, 204, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 102, 204, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 102, 204, 0);
+            }
+        }
+
+        .navbar-logo-icon i {
+            color: var(--white);
+            font-size: 20px;
+        }
+
+        .navbar-logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .navbar-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar-menu li {
+            margin-left: 30px;
+        }
+
+        .navbar-menu a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            font-size: 16px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-blue);
+            transition: width 0.3s ease;
+        }
+
+        .navbar-menu a:hover {
+            color: var(--primary-blue);
+        }
+
+        .navbar-menu a:hover::after {
+            width: 100%;
+        }
+
+        .navbar-menu a.active {
+            color: var(--primary-blue);
+        }
+
+        .navbar-menu a.active::after {
+            width: 100%;
+        }
+
+        .navbar-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+
+        .navbar-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--dark-gray);
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 120px 0 60px;
+            overflow: hidden;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(0, 102, 204, 0.1);
+            color: var(--primary-blue);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 102, 204, 0.2);
+            animation: fadeInDown 0.8s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--dark-blue);
+            animation: fadeInLeft 0.8s ease;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 40px;
+            color: var(--dark-gray);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInLeft 0.8s ease 0.2s both;
+        }
+
+        /* Form Section */
+        .form-section {
+            padding: 50px 0 100px;
+            position: relative;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .form-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            padding: 30px;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .form-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .form-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .form-body {
+            padding: 40px;
+        }
+
+        .form-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .form-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 50px;
+            right: 50px;
+            height: 2px;
+            background: var(--medium-gray);
+            z-index: 1;
+        }
+
+        .form-step {
+            width: 25%;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-indicator {
+            width: 50px;
+            height: 50px;
+            background: var(--white);
+            border: 2px solid var(--medium-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: 700;
+            color: var(--medium-gray);
+            transition: all 0.3s ease;
+        }
+
+        .step-indicator.active {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .step-indicator.completed {
+            background: var(--success);
+            border-color: var(--success);
+            color: var(--white);
+        }
+
+        .step-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .form-content {
+            display: none;
+        }
+
+        .form-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-col {
+            flex: 1;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .radio-item input[type="radio"] {
+            margin-right: 8px;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            border: 2px dashed var(--medium-gray);
+            border-radius: 8px;
+            background: rgba(0, 102, 204, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover .file-upload-label {
+            border-color: var(--primary-blue);
+            background: rgba(0, 102, 204, 0.1);
+        }
+
+        .file-upload-icon {
+            font-size: 36px;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .file-upload-text {
+            font-size: 16px;
+            color: var(--dark-gray);
+            text-align: center;
+        }
+
+        .file-preview {
+            margin-top: 15px;
+            display: none;
+        }
+
+        .file-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-primary {
+            background: var(--primary-blue);
+            color: var(--white);
+            box-shadow: var(--neon-glow);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-blue);
+            z-index: -1;
+            transition: transform 0.3s ease;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+
+        .btn-primary:hover {
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn-primary:hover::before {
+            transform: scaleX(1);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 102, 204, 0.2);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 102, 204, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .summary-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .summary-label {
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: var(--dark-blue);
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .payment-method {
+            border: 2px solid var(--medium-gray);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary-blue);
+            background: rgba(0, 102, 204, 0.05);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary-blue);
+            background: rgba(0, 102, 204, 0.1);
+        }
+
+        .payment-icon {
+            font-size: 36px;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .payment-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+
+        .success-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+        }
+
+        .success-description {
+            font-size: 18px;
+            color: var(--dark-gray);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Schedule Section */
+        .schedule-container {
+            margin-top: 30px;
+        }
+
+        .schedule-calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .schedule-day {
+            padding: 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .schedule-day:hover {
+            border-color: var(--primary-blue);
+            background: rgba(0, 102, 204, 0.05);
+        }
+
+        .schedule-day.selected {
+            border-color: var(--primary-blue);
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .schedule-day.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .schedule-day-header {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-gray);
+        }
+
+        .schedule-time-slots {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .time-slot {
+            padding: 8px 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .time-slot:hover {
+            border-color: var(--primary-blue);
+            background: rgba(0, 102, 204, 0.05);
+        }
+
+        .time-slot.selected {
+            border-color: var(--primary-blue);
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .time-slot.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Map Section */
+        .map-container {
+            height: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Barcode Section */
+        .barcode-container {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 102, 204, 0.05);
+            border-radius: 10px;
+        }
+
+        .barcode {
+            width: 200px;
+            height: 100px;
+            background: var(--white);
+            border: 1px solid var(--medium-gray);
+            border-radius: 8px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            font-size: 14px;
+            box-shadow: var(--shadow);
+        }
+
+        .barcode-info {
+            margin-top: 15px;
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+
+        /* Status Tracking */
+        .status-tracking {
+            margin-top: 30px;
+        }
+
+        .status-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .status-step {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            border-radius: 10px;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .status-step.completed {
+            background: rgba(0, 200, 83, 0.1);
+            border-left: 4px solid var(--success);
+        }
+
+        .status-step.active {
+            background: rgba(0, 102, 204, 0.1);
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .status-step.pending {
+            background: rgba(255, 255, 255, 0.5);
+            border-left: 4px solid var(--medium-gray);
+        }
+
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .status-step.completed .status-icon {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .status-step.active .status-icon {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .status-step.pending .status-icon {
+            background: var(--medium-gray);
+            color: var(--white);
+        }
+
+        .status-content {
+            flex: 1;
+        }
+
+        .status-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .status-description {
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+
+        .status-date {
+            font-size: 12px;
+            color: var(--dark-gray);
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-blue);
+            padding: 80px 0 40px;
+            position: relative;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        .footer-logo-icon i {
+            color: var(--dark-blue);
+            font-size: 20px;
+        }
+
+        .footer-logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .footer-description {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+            padding-left: 5px;
+        }
+
+        .footer-contact {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-contact li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .footer-contact i {
+            color: var(--gold);
+            font-size: 18px;
+            margin-right: 12px;
+            margin-top: 2px;
+        }
+
+        .footer-contact span {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            background: var(--gold);
+            color: var(--dark-blue);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            text-align: center;
+        }
+
+        .footer-copyright {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 24px;
+            box-shadow: var(--neon-glow);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: fab-pulse 2s infinite;
+        }
+
+        @keyframes fab-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(0, 212, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 212, 255, 0);
+            }
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            background: var(--primary-blue);
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 100px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 20px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--dark-blue);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                box-shadow: var(--shadow);
+                transform: translateY(-150%);
+                transition: transform 0.3s ease;
+            }
+
+            .navbar-menu.active {
+                transform: translateY(0);
+            }
+
+            .navbar-menu li {
+                margin: 10px 0;
+            }
+
+            .navbar-toggle {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .form-col {
+                margin-bottom: 20px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .fab {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 80px;
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .schedule-calendar {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 5px;
+            }
+
+            .schedule-day {
+                padding: 10px 5px;
+                font-size: 12px;
+            }
+
+            .time-slot {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .form-body {
+                padding: 20px;
+            }
+
+            .form-steps::before {
+                left: 25px;
+                right: 25px;
+            }
+
+            .step-indicator {
+                width: 40px;
+                height: 40px;
+            }
+
+            .step-title {
+                font-size: 12px;
+            }
+
+            .schedule-calendar {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 3px;
+            }
+
+            .schedule-day {
+                padding: 8px 3px;
+                font-size: 10px;
+            }
+
+            .time-slot {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+    <div class="neon-waves"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-logo">
+                <div class="navbar-logo-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="navbar-logo-text">POLRI DIGITAL</div>
+            </a>
+            <ul class="navbar-menu" id="navbarMenu">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="pendaftaran.html" class="active">Layanan</a></li>
+                <li><a href="status.html">Status</a></li>
+                <li><a href="informasi.html">Informasi</a></li>
+                <li><a href="pendaftaran.html" class="btn btn-primary" style="background: var(--primary-blue); color: white; padding: 8px 20px; border-radius: 20px;">Ajukan Sekarang</a></li>
+            </ul>
+            <div class="navbar-toggle" id="navbarToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-badge">Formulir Pembuatan SIM Baru</div>
+            <h1 class="hero-title">Pembuatan SIM Digital</h1>
+            <p class="hero-subtitle">Isi formulir berikut untuk membuat SIM baru secara online. Proses cepat, mudah, dan aman.</p>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section class="form-section">
+        <div class="form-container">
+            <div class="form-card" data-aos="fade-up">
+                <div class="form-header">
+                    <h2 class="form-title">Formulir Pembuatan SIM Baru</h2>
+                    <p class="form-subtitle">Silakan lengkapi data diri Anda dengan benar</p>
+                </div>
+                <div class="form-body">
+                    <div class="form-steps">
+                        <div class="form-step">
+                            <div class="step-indicator active" id="step1-indicator">1</div>
+                            <div class="step-title">Cek Data</div>
+                        </div>
+                        <div class="form-step">
+                            <div class="step-indicator" id="step2-indicator">2</div>
+                            <div class="step-title">Data SIM</div>
+                        </div>
+                        <div class="form-step">
+                            <div class="step-indicator" id="step3-indicator">3</div>
+                            <div class="step-title">Jadwal & Lokasi</div>
+                        </div>
+                        <div class="form-step">
+                            <div class="step-indicator" id="step4-indicator">4</div>
+                            <div class="step-title">Konfirmasi</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 1: Cek Kelengkapan Data -->
+                    <div class="form-content active" id="step1">
+                        <div class="form-group">
+                            <label for="nik-ktp">NIK (Nomor Induk Kependudukan)</label>
+                            <input type="text" id="nik-ktp" class="form-control" placeholder="Masukkan 16 digit NIK">
+                        </div>
+                        <div class="form-group">
+                            <label for="golongan-sim">Golongan SIM</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="sim-a" name="golongan-sim" value="A">
+                                    <label for="sim-a">SIM A (Mobil)</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="sim-c" name="golongan-sim" value="C">
+                                    <label for="sim-c">SIM C (Sepeda Motor)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="no-sim">Nomor SIM (jika ada)</label>
+                            <input type="text" id="no-sim" class="form-control" placeholder="Masukkan nomor SIM (kosongkan jika belum pernah memiliki)">
+                        </div>
+                        <div class="form-group">
+                            <label>Foto KTP</label>
+                            <div class="file-upload">
+                                <input type="file" id="ktp-upload" accept="image/*" onchange="previewImage('ktp-upload', 'ktp-preview')">
+                                <div class="file-upload-label">
+                                    <div class="file-upload-icon">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                    </div>
+                                    <div class="file-upload-text">
+                                        Klik untuk upload atau seret file ke sini<br>
+                                        <small>Format: JPG, PNG (Maks. 2MB)</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="file-preview" id="ktp-preview">
+                                <img src="" alt="Preview KTP">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <div></div>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(1)">
+                                <i class="fas fa-arrow-right"></i> Lanjutkan
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Data SIM -->
+                    <div class="form-content" id="step2">
+                        <div class="form-group">
+                            <label for="nama-lengkap">Nama Lengkap</label>
+                            <input type="text" id="nama-lengkap" class="form-control" placeholder="Masukkan nama lengkap Anda">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="no-hp">Nomor Handphone</label>
+                                    <input type="tel" id="no-hp" class="form-control" placeholder="Masukkan nomor handphone aktif">
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="kewarganegaraan">Kewarganegaraan</label>
+                                    <select id="kewarganegaraan" class="form-control">
+                                        <option value="">Pilih Kewarganegaraan</option>
+                                        <option value="wni">Warga Negara Indonesia (WNI)</option>
+                                        <option value="wna">Warga Negara Asing (WNA)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Jenis Kelamin</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="laki-laki" name="jenis-kelamin" value="L">
+                                    <label for="laki-laki">Laki-laki</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="perempuan" name="jenis-kelamin" value="P">
+                                    <label for="perempuan">Perempuan</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="tempat-lahir">Tempat Lahir</label>
+                                    <input type="text" id="tempat-lahir" class="form-control" placeholder="Masukkan tempat lahir">
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="tanggal-lahir">Tanggal Lahir</label>
+                                    <input type="date" id="tanggal-lahir" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="kota">Kota</label>
+                                    <select id="kota" class="form-control">
+                                        <option value="">Pilih Kota</option>
+                                        <option value="jakarta">Jakarta</option>
+                                        <option value="bandung">Bandung</option>
+                                        <option value="surabaya">Surabaya</option>
+                                        <option value="semarang">Semarang</option>
+                                        <option value="medan">Medan</option>
+                                        <option value="makassar">Makassar</option>
+                                        <option value="denpasar">Denpasar</option>
+                                        <option value="palembang">Palembang</option>
+                                        <option value="pekanbaru">Pekanbaru</option>
+                                        <option value="lainnya">Lainnya</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="kecamatan">Kecamatan/Kelurahan</label>
+                                    <input type="text" id="kecamatan" class="form-control" placeholder="Masukkan kecamatan/kelurahan">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat">Alamat Lengkap</label>
+                            <textarea id="alamat" class="form-control" rows="3" placeholder="Masukkan alamat lengkap sesuai KTP"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="pekerjaan">Jenis Pekerjaan</label>
+                            <select id="pekerjaan" class="form-control">
+                                <option value="">Pilih Pekerjaan</option>
+                                <option value="pelajar">Pelajar/Mahasiswa</option>
+                                <option value="pns">Pegawai Negeri Sipil</option>
+                                <option value="swasta">Pegawai Swasta</option>
+                                <option value="wirausaha">Wirausaha</option>
+                                <option value="tni">TNI/Polri</option>
+                                <option value="lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" onclick="prevStep(2)">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+                                <i class="fas fa-arrow-right"></i> Lanjutkan
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Penjadwalan Kedatangan -->
+                    <div class="form-content" id="step3">
+                        <div class="form-group">
+                            <label>Pilih Tanggal Kedatangan</label>
+                            <div class="schedule-container">
+                                <div class="schedule-calendar" id="schedule-calendar">
+                                    <!-- Calendar will be generated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Pilih Jam Kedatangan</label>
+                            <div class="schedule-time-slots" id="time-slots">
+                                <div class="time-slot" onclick="selectTimeSlot(this)">08:00 - 09:00</div>
+                                <div class="time-slot" onclick="selectTimeSlot(this)">09:00 - 10:00</div>
+                                <div class="time-slot" onclick="selectTimeSlot(this)">10:00 - 11:00</div>
+                                <div class="time-slot" onclick="selectTimeSlot(this)">11:00 - 12:00</div>
+                                <div class="time-slot" onclick="selectTimeSlot(this)">13:00 - 14:00</div>
+                                <div class="time-slot" onclick="selectTimeSlot(this)">14:00 - 15:00</div>
+                                <div class="time-slot" onclick="selectTimeSlot(this)">15:00 - 16:00</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Lokasi Tes Kesehatan dan Psikologi</label>
+                            <div class="map-container" id="map"></div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" onclick="prevStep(3)">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(3)">
+                                <i class="fas fa-arrow-right"></i> Lanjutkan
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Konfirmasi -->
+                    <div class="form-content" id="step4">
+                        <div class="summary-section">
+                            <h3 class="summary-title">Ringkasan Data</h3>
+                            <div class="summary-item">
+                                <span class="summary-label">Nama Lengkap</span>
+                                <span class="summary-value" id="summary-nama">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">NIK</span>
+                                <span class="summary-value" id="summary-nik">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Golongan SIM</span>
+                                <span class="summary-value" id="summary-golongan-sim">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Jadwal Kedatangan</span>
+                                <span class="summary-value" id="summary-jadwal">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Lokasi Tes</span>
+                                <span class="summary-value" id="summary-lokasi">-</span>
+                            </div>
+                        </div>
+
+                        <div class="barcode-container">
+                            <h3>Barcode Data Diri</h3>
+                            <div class="barcode" id="barcode">
+                                <!-- Barcode will be generated by JavaScript -->
+                            </div>
+                            <p class="barcode-info">Tunjukkan barcode ini kepada petugas saat kedatangan</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="setuju"> Saya menyatakan bahwa data yang saya berikan adalah benar dan dapat dipertanggungjawabkan kebenarannya.
+                            </label>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" onclick="prevStep(4)">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="submitForm()">
+                                <i class="fas fa-check"></i> Simpan Data
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Success Message -->
+                    <div class="success-message" id="success-message">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3 class="success-title">Data Berhasil Disimpan!</h3>
+                        <p class="success-description">
+                            Terima kasih telah mengajukan pembuatan SIM baru secara digital. Silakan datang sesuai jadwal yang telah Anda pilih untuk melakukan tes kesehatan, psikologi, dan proses selanjutnya.
+                        </p>
+                        
+                        <div class="status-tracking">
+                            <h3 class="summary-title">Status Proses</h3>
+                            <div class="status-steps">
+                                <div class="status-step completed">
+                                    <div class="status-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="status-content">
+                                        <div class="status-title">Pendaftaran Online</div>
+                                        <div class="status-description">Data pendaftaran telah berhasil disimpan</div>
+                                        <div class="status-date">Hari ini, 10:30</div>
+                                    </div>
+                                </div>
+                                <div class="status-step active">
+                                    <div class="status-icon">
+                                        <i class="fas fa-user-md"></i>
+                                    </div>
+                                    <div class="status-content">
+                                        <div class="status-title">Tes Kesehatan & Psikologi</div>
+                                        <div class="status-description">Menunggu jadwal tes kesehatan dan psikologi</div>
+                                        <div class="status-date">-</div>
+                                    </div>
+                                </div>
+                                <div class="status-step pending">
+                                    <div class="status-icon">
+                                        <i class="fas fa-clipboard-check"></i>
+                                    </div>
+                                    <div class="status-content">
+                                        <div class="status-title">Verifikasi Data</div>
+                                        <div class="status-description">Verifikasi data dan dokumen oleh petugas</div>
+                                        <div class="status-date">-</div>
+                                    </div>
+                                </div>
+                                <div class="status-step pending">
+                                    <div class="status-icon">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </div>
+                                    <div class="status-content">
+                                        <div class="status-title">Tes Teori & Praktek</div>
+                                        <div class="status-description">Tes teori dan praktek di SATPAS</div>
+                                        <div class="status-date">-</div>
+                                    </div>
+                                </div>
+                                <div class="status-step pending">
+                                    <div class="status-icon">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                    </div>
+                                    <div class="status-content">
+                                        <div class="status-title">Pembayaran</div>
+                                        <div class="status-description">Pembayaran biaya pembuatan SIM</div>
+                                        <div class="status-date">-</div>
+                                    </div>
+                                </div>
+                                <div class="status-step pending">
+                                    <div class="status-icon">
+                                        <i class="fas fa-id-card"></i>
+                                    </div>
+                                    <div class="status-content">
+                                        <div class="status-title">Penerbitan SIM</div>
+                                        <div class="status-description">Pencetakan dan penerbitan SIM</div>
+                                        <div class="status-date">-</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="index.html" class="btn btn-primary" style="margin-top: 30px;">
+                            <i class="fas fa-home"></i> Kembali ke Beranda
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="footer-logo-text">POLRI DIGITAL</div>
+                    </div>
+                    <p class="footer-description">Platform resmi Kepolisian Republik Indonesia untuk pelayanan
+                        administrasi kepolisian secara digital</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Layanan</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Pembuatan SIM Baru</a></li>
+                        <li><a href="#">Perpanjangan SIM</a></li>
+                        <li><a href="#">Laporan Kehilangan</a></li>
+                        <li><a href="#">SKCK Online</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Bantuan</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Panduan Pengguna</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                        <li><a href="#">Pusat Bantuan</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Kontak</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Jl. Trunojoyo No. 3, Kebayoran Baru, Jakarta Selatan</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>(021) 7218545</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@polri.go.id</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-globe"></i>
+                            <span>www.polri.go.id</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">© 2023 Kepolisian Republik Indonesia. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div class="fab" id="fab">
+        <i class="fab fa-whatsapp"></i>
+    </div>
+
+    <!-- Back to Top -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize AOS
+            AOS.init({
+                duration: 1000,
+                once: true,
+                easing: 'ease-out-cubic'
+            });
+
+            // Create particles
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                // Random size
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+
+                // Random animation duration
+                const duration = Math.random() * 20 + 10;
+                particle.style.animationDuration = `${duration}s`;
+
+                // Random animation delay
+                const delay = Math.random() * 5;
+                particle.style.animationDelay = `${delay}s`;
+
+                particlesContainer.appendChild(particle);
+            }
+
+            // Navbar toggle
+            const navbarToggle = document.getElementById('navbarToggle');
+            const navbarMenu = document.getElementById('navbarMenu');
+
+            navbarToggle.addEventListener('click', function () {
+                navbarMenu.classList.toggle('active');
+
+                // Animate hamburger menu
+                const spans = navbarToggle.querySelectorAll('span');
+                spans[0].style.transform = navbarMenu.classList.contains('active') ? 'rotate(45deg) translate(5px, 5px)' : '';
+                spans[1].style.opacity = navbarMenu.classList.contains('active') ? '0' : '';
+                spans[2].style.transform = navbarMenu.classList.contains('active') ? 'rotate(-45deg) translate(7px, -6px)' : '';
+            });
+
+            // Close navbar menu when clicking on a link
+            const navbarLinks = document.querySelectorAll('.navbar-menu a');
+            navbarLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navbarMenu.classList.remove('active');
+
+                    // Reset hamburger menu
+                    const spans = navbarToggle.querySelectorAll('span');
+                    spans[0].style.transform = '';
+                    spans[1].style.opacity = '';
+                    spans[2].style.transform = '';
+                });
+            });
+
+            // Back to top button
+            const backToTop = document.getElementById('backToTop');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // WhatsApp FAB
+            const fab = document.getElementById('fab');
+            fab.addEventListener('click', () => {
+                window.open('https://wa.me/6281234567890?text=Halo%20saya%20ingin%20bertanya%20tentang%20layanan%20pembuatan%20SIM%20baru%20digital', '_blank');
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Navbar scroll effect
+            const navbar = document.querySelector('.navbar');
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                    navbar.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.15)';
+                } else {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.85)';
+                    navbar.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
+                }
+            });
+
+            // Form validation
+            const formInputs = document.querySelectorAll('.form-control');
+            formInputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    if (this.value.trim() === '') {
+                        this.style.borderColor = 'var(--danger)';
+                    } else {
+                        this.style.borderColor = 'var(--success)';
+                    }
+                });
+            });
+
+            // Generate calendar
+            generateCalendar();
+            
+            // Initialize map
+            initializeMap();
+        });
+
+        // Form step navigation
+        function nextStep(currentStep) {
+            // Validate current step
+            if (!validateStep(currentStep)) {
+                return;
+            }
+
+            // Update step indicators
+            document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+            document.getElementById(`step${currentStep}-indicator`).classList.add('completed');
+
+            // Hide current step
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+
+            // Show next step
+            const nextStep = currentStep + 1;
+            document.getElementById(`step${nextStep}`).classList.add('active');
+            document.getElementById(`step${nextStep}-indicator`).classList.add('active');
+
+            // If moving to confirmation step, populate summary and generate barcode
+            if (nextStep === 4) {
+                populateSummary();
+                generateBarcode();
+            }
+
+            // Scroll to top of form
+            document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function prevStep(currentStep) {
+            // Update step indicators
+            document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+
+            // Hide current step
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+
+            // Show previous step
+            const prevStep = currentStep - 1;
+            document.getElementById(`step${prevStep}`).classList.add('active');
+            document.getElementById(`step${prevStep}-indicator`).classList.add('active');
+            document.getElementById(`step${prevStep}-indicator`).classList.remove('completed');
+
+            // Scroll to top of form
+            document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function validateStep(step) {
+            let isValid = true;
+
+            if (step === 1) {
+                // Validate data check
+                const requiredFields = ['nik-ktp'];
+                requiredFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field.value.trim() === '') {
+                        field.style.borderColor = 'var(--danger)';
+                        isValid = false;
+                    } else {
+                        field.style.borderColor = 'var(--success)';
+                    }
+                });
+
+                // Validate NIK (16 digits)
+                const nik = document.getElementById('nik-ktp').value;
+                if (nik.length !== 16 || isNaN(nik)) {
+                    document.getElementById('nik-ktp').style.borderColor = 'var(--danger)';
+                    isValid = false;
+                }
+
+                // Validate SIM type selection
+                const simType = document.querySelector('input[name="golongan-sim"]:checked');
+                if (!simType) {
+                    isValid = false;
+                    showNotification('Silakan pilih golongan SIM', 'warning');
+                }
+
+                // Validate KTP upload
+                const ktpUpload = document.getElementById('ktp-upload');
+                if (!ktpUpload.files || ktpUpload.files.length === 0) {
+                    isValid = false;
+                    showNotification('Silakan upload foto KTP', 'warning');
+                }
+            } else if (step === 2) {
+                // Validate SIM data
+                const requiredFields = ['nama-lengkap', 'no-hp', 'kewarganegaraan', 'tempat-lahir', 'tanggal-lahir', 'kota', 'kecamatan', 'alamat', 'pekerjaan'];
+                requiredFields.forEach(fieldId => {
+                    const field = document.getElementById(fieldId);
+                    if (field.value.trim() === '') {
+                        field.style.borderColor = 'var(--danger)';
+                        isValid = false;
+                    } else {
+                        field.style.borderColor = 'var(--success)';
+                    }
+                });
+
+                // Validate gender selection
+                const gender = document.querySelector('input[name="jenis-kelamin"]:checked');
+                if (!gender) {
+                    isValid = false;
+                    showNotification('Silakan pilih jenis kelamin', 'warning');
+                }
+
+                // Validate phone number
+                const phone = document.getElementById('no-hp').value;
+                if (phone.length < 10 || isNaN(phone)) {
+                    document.getElementById('no-hp').style.borderColor = 'var(--danger)';
+                    isValid = false;
+                }
+            } else if (step === 3) {
+                // Validate schedule selection
+                const selectedDay = document.querySelector('.schedule-day.selected');
+                const selectedTime = document.querySelector('.time-slot.selected');
+                
+                if (!selectedDay) {
+                    isValid = false;
+                    showNotification('Silakan pilih tanggal kedatangan', 'warning');
+                }
+                
+                if (!selectedTime) {
+                    isValid = false;
+                    showNotification('Silakan pilih jam kedatangan', 'warning');
+                }
+            }
+
+            if (!isValid) {
+                showNotification('Silakan lengkapi semua data yang diperlukan', 'warning');
+            }
+
+            return isValid;
+        }
+
+        function populateSummary() {
+            // Populate summary with form data
+            document.getElementById('summary-nama').textContent = document.getElementById('nama-lengkap').value;
+            document.getElementById('summary-nik').textContent = document.getElementById('nik-ktp').value;
+            
+            const simType = document.querySelector('input[name="golongan-sim"]:checked');
+            document.getElementById('summary-golongan-sim').textContent = simType ? `SIM ${simType.value}` : '-';
+            
+            const selectedDay = document.querySelector('.schedule-day.selected');
+            const selectedTime = document.querySelector('.time-slot.selected');
+            const dayText = selectedDay ? selectedDay.querySelector('.schedule-day-date').textContent : '';
+            const timeText = selectedTime ? selectedTime.textContent : '';
+            document.getElementById('summary-jadwal').textContent = `${dayText}, ${timeText}`;
+            
+            document.getElementById('summary-lokasi').textContent = 'SATPAS Jakarta, Jl. MT. Haryono No. 11, Jakarta Selatan';
+        }
+
+        function generateBarcode() {
+            // Generate QR code with user data
+            const barcodeContainer = document.getElementById('barcode');
+            barcodeContainer.innerHTML = ''; // Clear previous content
+            
+            const userData = {
+                nik: document.getElementById('nik-ktp').value,
+                name: document.getElementById('nama-lengkap').value,
+                simType: document.querySelector('input[name="golongan-sim"]:checked').value,
+                schedule: document.getElementById('summary-jadwal').textContent
+            };
+            
+            new QRCode(barcodeContainer, {
+                text: JSON.stringify(userData),
+                width: 180,
+                height: 90,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        function generateCalendar() {
+            const calendarContainer = document.getElementById('schedule-calendar');
+            const daysOfWeek = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+            const today = new Date();
+            const currentMonth = today.getMonth();
+            const currentYear = today.getFullYear();
+            
+            // Add day headers
+            daysOfWeek.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'schedule-day-header';
+                dayHeader.textContent = day;
+                calendarContainer.appendChild(dayHeader);
+            });
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            
+            // Add empty cells for days before the first day of the month
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'schedule-day disabled';
+                calendarContainer.appendChild(emptyDay);
+            }
+            
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'schedule-day';
+                
+                // Skip weekends (Saturday and Sunday)
+                const dayOfWeek = new Date(currentYear, currentMonth, day).getDay();
+                if (dayOfWeek === 0 || dayOfWeek === 6) {
+                    dayElement.classList.add('disabled');
+                } else {
+                    dayElement.onclick = function() { selectScheduleDay(this); };
+                    
+                    // Disable past days
+                    if (day < today.getDate()) {
+                        dayElement.classList.add('disabled');
+                    }
+                }
+                
+                const dayNumber = document.createElement('div');
+                dayNumber.textContent = day;
+                dayElement.appendChild(dayNumber);
+                
+                const dayDate = document.createElement('div');
+                dayDate.className = 'schedule-day-date';
+                dayDate.textContent = `${day} ${new Date(currentYear, currentMonth, day).toLocaleDateString('id-ID', { month: 'short' })}`;
+                dayElement.appendChild(dayDate);
+                
+                calendarContainer.appendChild(dayElement);
+            }
+        }
+
+        function selectScheduleDay(element) {
+            // Remove selected class from all days
+            document.querySelectorAll('.schedule-day').forEach(day => {
+                day.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked day
+            element.classList.add('selected');
+        }
+
+        function selectTimeSlot(element) {
+            // Remove selected class from all time slots
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked time slot
+            element.classList.add('selected');
+        }
+
+        function initializeMap() {
+            // Initialize map only when step 3 is active
+            const step3 = document.getElementById('step3');
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.target.classList.contains('active')) {
+                        // Initialize map
+                        const map = L.map('map').setView([-6.229728, 106.829543], 15);
+                        
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
+                        
+                        // Add marker for SATPAS location
+                        const marker = L.marker([-6.229728, 106.829543]).addTo(map);
+                        marker.bindPopup('<b>SATPAS Jakarta</b><br>Jl. MT. Haryono No. 11, Jakarta Selatan').openPopup();
+                        
+                        // Disconnect observer after initialization
+                        observer.disconnect();
+                    }
+                });
+            });
+            
+            observer.observe(step3, { attributes: true, attributeFilter: ['class'] });
+        }
+
+        function previewImage(inputId, previewId) {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.querySelector('img').src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function submitForm() {
+            // Validate agreement checkbox
+            const agreement = document.getElementById('setuju');
+            if (!agreement.checked) {
+                showNotification('Silakan centang pernyataan kebenaran data', 'warning');
+                return;
+            }
+            
+            // Show loading state
+            const submitButton = document.querySelector('#step4 .btn-primary');
+            const originalText = submitButton.innerHTML;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+            submitButton.disabled = true;
+            
+            // Simulate form submission
+            setTimeout(() => {
+                // Hide form and show success message
+                document.querySelector('.form-body').style.display = 'none';
+                document.getElementById('success-message').style.display = 'block';
+                
+                // Reset form
+                document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' });
+            }, 2000);
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.left = '50%';
+            notification.style.transform = 'translateX(-50%)';
+            notification.style.padding = '15px 25px';
+            notification.style.borderRadius = '50px';
+            notification.style.boxShadow = 'var(--shadow)';
+            notification.style.zIndex = '10000';
+            notification.style.fontSize = '16px';
+            notification.style.fontWeight = '500';
+            notification.textContent = message;
+            
+            // Set color based on type
+            if (type === 'success') {
+                notification.style.backgroundColor = 'var(--success)';
+                notification.style.color = 'var(--white)';
+            } else if (type === 'warning') {
+                notification.style.backgroundColor = 'var(--warning)';
+                notification.style.color = 'var(--white)';
+            } else if (type === 'danger') {
+                notification.style.backgroundColor = 'var(--danger)';
+                notification.style.color = 'var(--white)';
+            } else {
+                notification.style.backgroundColor = 'var(--primary-blue)';
+                notification.style.color = 'var(--white)';
+            }
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>
