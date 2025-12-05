@@ -498,6 +498,162 @@
             color: var(--white);
         }
 
+        /* Location Section */
+        .location-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4ecf7 100%);
+            position: relative;
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .location-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .location-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 82, 204, 0.2);
+        }
+
+        .location-image {
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .location-card:hover .location-image img {
+            transform: scale(1.1);
+        }
+
+        .location-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--neon-blue);
+            color: var(--white);
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            box-shadow: var(--neon-glow);
+        }
+
+        .location-content {
+            padding: 30px;
+        }
+
+        .location-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+        }
+
+        .location-title i {
+            margin-right: 10px;
+            color: var(--neon-blue);
+        }
+
+        .location-details {
+            margin-bottom: 20px;
+        }
+
+        .location-details p {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            color: var(--dark-gray);
+        }
+
+        .location-details p i {
+            color: var(--primary-blue);
+            margin-right: 10px;
+            margin-top: 5px;
+            font-size: 1.1rem;
+        }
+
+        .location-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .location-feature {
+            background: rgba(0, 102, 204, 0.1);
+            color: var(--primary-blue);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .location-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-location {
+            flex: 1;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-blue), var(--neon-blue));
+            color: var(--white);
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: var(--neon-glow);
+            text-align: center;
+        }
+
+        .btn-location:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 102, 204, 0.4);
+            color: var(--white);
+        }
+
+        .btn-direction {
+            flex: 1;
+            display: inline-block;
+            background: transparent;
+            color: var(--primary-blue);
+            font-weight: 600;
+            padding: 12px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid var(--primary-blue);
+            text-align: center;
+        }
+
+        .btn-direction:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+
         /* FAQ Section */
         .faq {
             padding: 100px 0;
@@ -882,6 +1038,10 @@
             .service-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .location-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -938,6 +1098,10 @@
                 width: 40px;
                 height: 40px;
                 font-size: 16px;
+            }
+            
+            .location-actions {
+                flex-direction: column;
             }
         }
 
@@ -1024,6 +1188,68 @@
                     <h3>Laporan Kehilangan</h3>
                     <p>Pelaporan kehilangan barang dan dokumen dengan sistem pencarian terintegrasi</p>
                     <a href="pendaftaran.html" class="btn-service">Ajukan Sekarang</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Lokasi Pelayanan</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Temukan lokasi pelayanan terdekat dengan fasilitas lengkap</p>
+
+            <div class="location-grid">
+                <div class="location-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="location-image">
+                        <img src="https://images.unsplash.com/photo-1596720777461-3b8e8e8a6d3c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Kantor kesehatan gresik">
+                        <div class="location-badge">Pusat</div>
+                    </div>
+                    <div class="location-content">
+                        <h3 class="location-title"><i class="fas fa-map-marker-alt"></i> Gresik</h3>
+                        <div class="location-details">
+                            <p><i class="fas fa-map-pin"></i> Kebomas, Setingi, Randuagung, Kec. Kebomas, Kabupaten Gresik, Jawa Timur 61121</p>
+                            <p><i class="fas fa-clock"></i> Senin - Jumat: 08:00 - 16:00</p>
+                            <p><i class="fas fa-phone"></i> (021) 1234567</p>
+                        </div>
+                        <div class="location-features">
+                            <span class="location-feature">SIM</span>
+                            <span class="location-feature">SKCK</span>
+                            <span class="location-feature">STNK</span>
+                            <span class="location-feature">BPKB</span>
+                        </div>
+                        <div class="location-actions">
+                            <a href="https://maps.app.goo.gl/XqELi5VJ1t4yeBbN9?g_st=ic" target="_blank" class="btn-location">
+                                <i class="fas fa-map-marked-alt"></i> Lihat Peta
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="location-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="location-image">
+                        <img src="https://images.unsplash.com/photo-1596720777461-3b8e8e8a6d3c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Kantor psikotes gresik">
+                        <div class="location-badge">Cabang</div>
+                    </div>
+                    <div class="location-content">
+                        <h3 class="location-title"><i class="fas fa-map-marker-alt"></i> Gresik </h3>
+                        <div class="location-details">
+                            <p><i class="fas fa-map-pin"></i> Jl. Tunjungan No. 12, Surabaya</p>
+                            <p><i class="fas fa-clock"></i> Senin - Jumat: 08:00 - 16:00</p>
+                            <p><i class="fas fa-phone"></i> (031) 7654321</p>
+                        </div>
+                        <div class="location-features">
+                            <span class="location-feature">SIM</span>
+                            <span class="location-feature">SKCK</span>
+                            <span class="location-feature">STNK</span>
+                            <span class="location-feature">BPKB</span>
+                        </div>
+                        <div class="location-actions">
+                            <a href="https://maps.app.goo.gl/9PPPkU9E8PiLsFKE9?g_st=ic" target="_blank" class="btn-location">
+                                <i class="fas fa-map-marked-alt"></i> Lihat Peta
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1146,10 +1372,10 @@
                     </div>
                     <h3>Live Chat</h3>
                     <p>Chat dengan asisten virtual kami<br>Tersedia 24/7</p>
-                    <a href="live-chat.html                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     " class="btn-contact">Chat Sekarang</a>
+                    <a href="live-chat.html" class="btn-contact">Chat Sekarang</a>
                 </div>
             </div>
-        </div>//.
+        </div>
     </section>
 
     <!-- Footer -->
