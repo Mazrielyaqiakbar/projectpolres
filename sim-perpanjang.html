@@ -186,14 +186,10 @@
         .navbar-logo-icon {
             width: 40px;
             height: 40px;
-            background: var(--primary-blue);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             margin-right: 12px;
             box-shadow: var(--neon-glow);
             animation: pulse 2s infinite;
+            object-fit: contain;
         }
 
         @keyframes pulse {
@@ -208,11 +204,6 @@
             100% {
                 box-shadow: 0 0 0 0 rgba(0, 102, 204, 0);
             }
-        }
-
-        .navbar-logo-icon i {
-            color: var(--white);
-            font-size: 20px;
         }
 
         .navbar-logo-text {
@@ -1262,9 +1253,7 @@
     <nav class="navbar">
         <div class="navbar-container">
             <a href="index.html" class="navbar-logo">
-                <div class="navbar-logo-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
+                <img src="image/logopolres.png" alt="POLRI Logo" class="navbar-logo-icon">
                 <div class="navbar-logo-text">POLRI DIGITAL</div>
             </a>
             <ul class="navbar-menu" id="navbarMenu">

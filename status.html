@@ -144,17 +144,17 @@
             }
         }
 
-        /* Navigation */
+        /* Navigation - Updated */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 15px 0;
+            padding: 12px 0;
             z-index: 1000;
             transition: all 0.3s ease;
             box-shadow: var(--shadow);
@@ -176,15 +176,12 @@
         }
 
         .navbar-logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-blue);
-            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-right: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 12px;
-            box-shadow: var(--neon-glow);
             animation: pulse 2s infinite;
         }
 
@@ -200,14 +197,15 @@
             }
         }
 
-        .navbar-logo-icon i {
-            color: var(--white);
-            font-size: 20px;
+        .navbar-logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .navbar-logo-text {
             font-family: 'Orbitron', sans-serif;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--primary-blue);
         }
@@ -1120,7 +1118,7 @@
         <div class="navbar-container">
             <a href="index.html" class="navbar-logo">
                 <div class="navbar-logo-icon">
-                    <i class="fas fa-shield-alt"></i>
+                    <img src="image/logopolres.png" alt="Logo POLRI">
                 </div>
                 <div class="navbar-logo-text">POLRI<span style="color: var(--gold);">.DIGITAL</span></div>
             </a>
@@ -1175,7 +1173,8 @@
                             Nomor Registrasi: REG-2023-SIM-001235 (Status: Selesai)
                         </p>
                     </div>
-                        </div>
+                </div>
+            </div>
 
             <div class="status-result" id="statusResult" data-aos="fade-up">
                 <!-- Status result will be dynamically inserted here -->

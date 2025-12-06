@@ -548,6 +548,30 @@
             font-size: 1.1rem;
         }
 
+        /* Quick Options */
+        .quick-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .quick-option {
+            background: rgba(0, 102, 204, 0.1);
+            border: 1px solid var(--primary-blue);
+            border-radius: 20px;
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            color: var(--primary-blue);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quick-option:hover {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .chat-sidebar {
@@ -601,36 +625,12 @@
                 </div>
                 <div class="chat-list" id="chatList">
                     <div class="chat-item active" data-chat-id="1">
-                        <div class="chat-item-avatar">CS</div>
-                        <div class="chat-item-content">
-                            <div class="chat-item-name">Layanan Pelanggan</div>
-                            <div class="chat-item-message">Halo, ada yang bisa kami bantu?</div>
-                        </div>
-                        <div class="chat-item-time">10:30</div>
-                    </div>
-                    <div class="chat-item" data-chat-id="2">
-                        <div class="chat-item-avatar">SK</div>
-                        <div class="chat-item-content">
-                            <div class="chat-item-name">Layanan SKCK</div>
-                            <div class="chat-item-message">Pengajuan SKCK Anda sedang diproses</div>
-                        </div>
-                        <div class="chat-item-time">Kemarin</div>
-                    </div>
-                    <div class="chat-item" data-chat-id="3">
                         <div class="chat-item-avatar">SI</div>
                         <div class="chat-item-content">
                             <div class="chat-item-name">Layanan SIM</div>
-                            <div class="chat-item-message">Jadwal perpanjangan SIM Anda tersedia</div>
+                            <div class="chat-item-message">Halo, ada yang bisa kami bantu?</div>
                         </div>
-                        <div class="chat-item-time">2 hari lalu</div>
-                    </div>
-                    <div class="chat-item" data-chat-id="4">
-                        <div class="chat-item-avatar">BP</div>
-                        <div class="chat-item-content">
-                            <div class="chat-item-name">Layanan BPKB</div>
-                            <div class="chat-item-message">Terima kasih telah menggunakan layanan kami</div>
-                        </div>
-                        <div class="chat-item-time">3 hari lalu</div>
+                        <div class="chat-item-time">10:30</div>
                     </div>
                 </div>
             </div>
@@ -638,9 +638,9 @@
             <!-- Chat Conversation -->
             <div class="chat-conversation" id="chatConversation">
                 <div class="chat-conversation-header">
-                    <div class="chat-conversation-avatar">CS</div>
+                    <div class="chat-conversation-avatar">SI</div>
                     <div>
-                        <div class="chat-conversation-name">Layanan Pelanggan</div>
+                        <div class="chat-conversation-name">Layanan SIM</div>
                         <div class="chat-conversation-status">Online - Akan di repon dalam secepatnya</div>
                     </div>
                 </div>
@@ -648,30 +648,29 @@
                 <div class="chat-messages" id="chatMessages">
                     <div class="message received">
                         <div class="message-bubble">
-                            Selamat datang di Live Chat POLRI.DIGITAL. Ada yang bisa kami bantu hari ini?
+                            Selamat datang di Layanan SIM Digital POLRI. Ada yang bisa kami bantu hari ini?
                         </div>
                         <div class="message-time">10:25</div>
                     </div>
 
                     <div class="message received">
                         <div class="message-bubble">
-                            Saya adalah asisten virtual yang siap membantu Anda dengan informasi seputar layanan
-                            POLRI.DIGITAL.
+                            Saya adalah asisten virtual yang siap membantu Anda dengan informasi seputar layanan SIM Digital.
                         </div>
                         <div class="message-time">10:26</div>
                     </div>
 
                     <div class="message received">
                         <div class="message-bubble">
-                            Silakan pilih layanan yang Anda butuhkan:
-                            <br>1. SKCK Online
-                            <br>2. SIM Digital
-                            <br>3. BPKB Elektronik
-                            <br>4. STNK Online
-                            <br>5. Izin Keramaian
-                            <br>6. Laporan Kehilangan
+                            Silakan pilih layanan SIM yang Anda butuhkan:
                         </div>
                         <div class="message-time">10:28</div>
+                        <div class="quick-options">
+                            <div class="quick-option" onclick="selectQuickOption('Perpanjangan SIM')">Perpanjangan SIM</div>
+                            <div class="quick-option" onclick="selectQuickOption('Pembuatan SIM Baru')">Pembuatan SIM Baru</div>
+                            <div class="quick-option" onclick="selectQuickOption('SIM Hilang')">SIM Hilang</div>
+                            <div class="quick-option" onclick="selectQuickOption('Informasi SIM')">Informasi SIM</div>
+                        </div>
                     </div>
                 </div>
 
@@ -738,24 +737,10 @@
             // Chat data
             const chatData = {
                 1: {
-                    name: 'Layanan Pelanggan',
-                    avatar: 'CS',
-                    status: 'Online - Biasanya merespon dalam 5 menit'
-                },
-                2: {
-                    name: 'Layanan SKCK',
-                    avatar: 'SK',
-                    status: 'Online - Biasanya merespon dalam 10 menit'
-                },
-                3: {
+                    
                     name: 'Layanan SIM',
                     avatar: 'SI',
-                    status: 'Online - Biasanya merespon dalam 15 menit'
-                },
-                4: {
-                    name: 'Layanan BPKB',
-                    avatar: 'BP',
-                    status: 'Offline - Akan merespon pada jam kerja'
+                    status: 'Online - Biasanya merespon dalam 5 menit'
                 }
             };
 
@@ -800,26 +785,14 @@
 
                 // Add messages based on chat id
                 if (chatId === '1') {
-                    addMessage('received', 'Selamat datang di Live Chat POLRI.DIGITAL. Ada yang bisa kami bantu hari ini?', '10:25');
-                    addMessage('received', 'Saya adalah asisten virtual yang siap membantu Anda dengan informasi seputar layanan POLRI.DIGITAL.', '10:26');
-                    addMessage('received', 'Silakan pilih layanan yang Anda butuhkan:<br>1. SKCK Online<br>2. SIM Digital<br>3. BPKB Elektronik<br>4. STNK Online<br>5. Izin Keramaian<br>6. Laporan Kehilangan', '10:28');
-                } else if (chatId === '2') {
-                    addMessage('received', 'Selamat datang di Layanan SKCK Online. Ada yang bisa kami bantu?', '09:15');
-                    addMessage('sent', 'Saya ingin menanyakan status pengajuan SKCK saya.', '09:20');
-                    addMessage('received', 'Tentu, silakan sebutkan nomor registrasi pengajuan SKCK Anda.', '09:22');
-                } else if (chatId === '3') {
-                    addMessage('received', 'Selamat datang di Layanan SIM Digital. Ada yang bisa kami bantu?', 'Kemarin');
-                    addMessage('sent', 'Saya ingin membuat perpanjangan SIM.', 'Kemarin');
-                    addMessage('received', 'Silakan pilih jenis SIM yang ingin diperpanjang:<br>1. SIM A<br>2. SIM C<br>3. SIM B1<br>4. SIM B2', 'Kemarin');
-                } else if (chatId === '4') {
-                    addMessage('received', 'Selamat datang di Layanan BPKB Elektronik. Ada yang bisa kami bantu?', '3 hari lalu');
-                    addMessage('sent', 'Saya ingin menanyakan proses perubahan nama di BPKB.', '3 hari lalu');
-                    addMessage('received', 'Untuk perubahan nama di BPKB, Anda perlu melengkapi dokumen berikut:<br>1. KTP asli dan fotokopi<br>2. KK asli dan fotokopi<br>3. BPKB asli<br>4. Surat keterangan dari Kelurahan/Desa', '3 hari lalu');
+                    addMessage('received', 'Selamat datang di Layanan SIM Digital POLRI. Ada yang bisa kami bantu hari ini?', '10:25');
+                    addMessage('received', 'Saya adalah asisten virtual yang siap membantu Anda dengan informasi seputar layanan SIM Digital.', '10:26');
+                    addMessage('received', 'Silakan pilih layanan SIM yang Anda butuhkan:', '10:28', true);
                 }
             }
 
             // Add message to chat
-            function addMessage(type, text, time) {
+            function addMessage(type, text, time, showOptions = false) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${type}`;
                 messageDiv.setAttribute('data-aos', 'fade-up');
@@ -835,6 +808,38 @@
                 messageDiv.appendChild(bubbleDiv);
                 messageDiv.appendChild(timeDiv);
 
+                if (showOptions) {
+                    const optionsDiv = document.createElement('div');
+                    optionsDiv.className = 'quick-options';
+                    
+                    const option1 = document.createElement('div');
+                    option1.className = 'quick-option';
+                    option1.textContent = 'Perpanjangan SIM';
+                    option1.onclick = function() { selectQuickOption('Perpanjangan SIM'); };
+                    
+                    const option2 = document.createElement('div');
+                    option2.className = 'quick-option';
+                    option2.textContent = 'Pembuatan SIM Baru';
+                    option2.onclick = function() { selectQuickOption('Pembuatan SIM Baru'); };
+                    
+                    const option3 = document.createElement('div');
+                    option3.className = 'quick-option';
+                    option3.textContent = 'SIM Hilang';
+                    option3.onclick = function() { selectQuickOption('SIM Hilang'); };
+                    
+                    const option4 = document.createElement('div');
+                    option4.className = 'quick-option';
+                    option4.textContent = 'Informasi SIM';
+                    option4.onclick = function() { selectQuickOption('Informasi SIM'); };
+                    
+                    optionsDiv.appendChild(option1);
+                    optionsDiv.appendChild(option2);
+                    optionsDiv.appendChild(option3);
+                    optionsDiv.appendChild(option4);
+                    
+                    messageDiv.appendChild(optionsDiv);
+                }
+
                 chatMessages.appendChild(messageDiv);
 
                 // Scroll to bottom
@@ -842,6 +847,74 @@
 
                 // Refresh AOS
                 AOS.refresh();
+            }
+
+            // Select quick option
+            function selectQuickOption(option) {
+                // Get current time
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const timeString = `${hours}:${minutes}`;
+
+                // Add user message
+                addMessage('sent', option, timeString);
+
+                // Simulate response after a delay
+                setTimeout(() => {
+                    handleQuickOption(option);
+                }, 1000);
+            }
+
+            // Handle quick option selection
+            function handleQuickOption(option) {
+                // Get current time
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const timeString = `${hours}:${minutes}`;
+
+                let response = '';
+                let showOptions = false;
+
+                if (option === 'Perpanjangan SIM') {
+                    response = 'Untuk perpanjangan SIM, silakan pilih jenis SIM yang ingin diperpanjang:';
+                    showOptions = true;
+                } else if (option === 'Pembuatan SIM Baru') {
+                    response = 'Untuk pembuatan SIM baru, silakan pilih jenis SIM yang ingin dibuat:';
+                    showOptions = true;
+                } else if (option === 'SIM Hilang') {
+                    response = 'Untuk SIM hilang, Anda perlu membuat laporan kehilangan terlebih dahulu. Silakan pilih jenis SIM yang hilang:';
+                    showOptions = true;
+                } else if (option === 'Informasi SIM') {
+                    response = 'Silakan pilih informasi SIM yang ingin Anda ketahui:';
+                    showOptions = true;
+                } else if (option === 'SIM A') {
+                    response = 'Untuk SIM A (Mobil), berikut informasi yang Anda butuhkan:<br><br>1. Persyaratan:<br>   - KTP asli dan fotokopi<br>   - SIM lama (untuk perpanjangan)<br>   - Surat keterangan sehat<br>   - Pas foto 3x4 (latar merah)<br><br>2. Biaya: Rp 120.000<br><br>3. Proses: 1-3 hari kerja<br><br>Apakah Anda ingin melanjutkan pengajuan?';
+                } else if (option === 'SIM C') {
+                    response = 'Untuk SIM C (Sepeda Motor), berikut informasi yang Anda butuhkan:<br><br>1. Persyaratan:<br>   - KTP asli dan fotokopi<br>   - SIM lama (untuk perpanjangan)<br>   - Surat keterangan sehat<br>   - Pas foto 3x4 (latar merah)<br><br>2. Biaya: Rp 100.000<br><br>3. Proses: 1-3 hari kerja<br><br>Apakah Anda ingin melanjutkan pengajuan?';
+                } else if (option === 'SIM B1') {
+                    response = 'Untuk SIM B1 (Truk Sedang), berikut informasi yang Anda butuhkan:<br><br>1. Persyaratan:<br>   - KTP asli dan fotokopi<br>   - SIM lama (untuk perpanjangan)<br>   - Surat keterangan sehat<br>   - Pas foto 3x4 (latar merah)<br><br>2. Biaya: Rp 150.000<br><br>3. Proses: 3-5 hari kerja<br><br>Apakah Anda ingin melanjutkan pengajuan?';
+                } else if (option === 'SIM B2') {
+                    response = 'Untuk SIM B2 (Truk Besar), berikut informasi yang Anda butuhkan:<br><br>1. Persyaratan:<br>   - KTP asli dan fotokopi<br>   - SIM lama (untuk perpanjangan)<br>   - Surat keterangan sehat<br>   - Pas foto 3x4 (latar merah)<br><br>2. Biaya: Rp 200.000<br><br>3. Proses: 3-5 hari kerja<br><br>Apakah Anda ingin melanjutkan pengajuan?';
+                } else if (option === 'Ya' || option.toLowerCase().includes('ya')) {
+                    response = 'Silakan kunjungi halaman pendaftaran untuk melanjutkan pengajuan Anda. Anda akan diarahkan ke formulir pendaftaran online.';
+                } else if (option === 'Tidak' || option.toLowerCase().includes('tidak')) {
+                    response = 'Terima kasih. Apakah ada yang bisa kami bantu lagi?';
+                    showOptions = true;
+                } else if (option.toLowerCase().includes('biaya') || option.toLowerCase().includes('harga')) {
+                    response = 'Berikut rincian biaya pembuatan/perpanjangan SIM:<br><br>1. SIM A: Rp 120.000<br>2. SIM C: Rp 100.000<br>3. SIM B1: Rp 150.000<br>4. SIM B2: Rp 200.000<br><br>Biaya sudah termasuk administrasi dan asuransi.';
+                } else if (option.toLowerCase().includes('waktu') || option.toLowerCase().includes('lama')) {
+                    response = 'Waktu proses pembuatan/perpanjangan SIM:<br><br>1. SIM A: 1-3 hari kerja<br>2. SIM C: 1-3 hari kerja<br>3. SIM B1: 3-5 hari kerja<br>4. SIM B2: 3-5 hari kerja<br><br>Proses dapat lebih cepat jika dokumen lengkap.';
+                } else if (option.toLowerCase().includes('persyaratan') || option.toLowerCase().includes('dokumen')) {
+                    response = 'Persyaratan umum untuk pembuatan/perpanjangan SIM:<br><br>1. KTP asli dan fotokopi<br>2. SIM lama (untuk perpanjangan)<br>3. Surat keterangan sehat dari rumah sakit/puskesmas<br>4. Pas foto 3x4 dengan latar belakang merah<br>5. Bukti pembayaran<br><br>Persyaratan tambahan mungkin diperlukan untuk SIM B1 dan B2.';
+                } else {
+                    response = 'Maaf, saya tidak mengerti pertanyaan Anda. Silakan pilih salah satu opsi yang tersedia atau ajukan pertanyaan lain seputar layanan SIM.';
+                    showOptions = true;
+                }
+
+                // Add received message
+                addMessage('received', response, timeString, showOptions);
             }
 
             // Send message
@@ -863,42 +936,9 @@
 
                     // Simulate response after a delay
                     setTimeout(() => {
-                        simulateResponse(messageText);
+                        handleQuickOption(messageText);
                     }, 1000);
                 }
-            }
-
-            // Simulate response
-            function simulateResponse(message) {
-                // Get current time
-                const now = new Date();
-                const hours = now.getHours().toString().padStart(2, '0');
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                const timeString = `${hours}:${minutes}`;
-
-                // Simple response logic
-                let response = '';
-
-                if (message.toLowerCase().includes('skck')) {
-                    response = 'Untuk pengajuan SKCK Online, silakan kunjungi halaman pendaftaran dan lengkapi formulir yang tersedia. Proses verifikasi membutuhkan waktu 1-3 hari kerja.';
-                } else if (message.toLowerCase().includes('sim')) {
-                    response = 'Untuk perpanjangan SIM Digital, pastikan Anda telah menyiapkan KTP, SIM lama, dan pas foto. Proses dapat dilakukan secara online melalui portal kami.';
-                } else if (message.toLowerCase().includes('bpkb')) {
-                    response = 'Layanan BPKB Elektronik memudahkan Anda dalam pengurusan dokumen kendaraan. Silakan pilih jenis layanan yang Anda butuhkan di halaman pendaftaran.';
-                } else if (message.toLowerCase().includes('stnk')) {
-                    response = 'Untuk pembayaran pajak dan perpanjangan STNK Online, Anda dapat menggunakan layanan kami dengan mengikuti langkah-langkah di halaman pendaftaran.';
-                } else if (message.toLowerCase().includes('izin') || message.toLowerCase().includes('keramaian')) {
-                    response = 'Pengajuan izin keramaian dapat dilakukan secara online dengan melampirkan dokumen persyaratan. Proses verifikasi membutuhkan waktu 3-5 hari kerja.';
-                } else if (message.toLowerCase().includes('kehilangan')) {
-                    response = 'Untuk melapor kehilangan, silakan lengkapi formulir laporan dengan data diri dan barang yang hilang. Laporan Anda akan segera diproses.';
-                } else if (message.toLowerCase().includes('terima kasih') || message.toLowerCase().includes('thanks')) {
-                    response = 'Sama-sama. Jangan ragu untuk menghubungi kami kembali jika membutuhkan bantuan. Terima kasih telah menggunakan layanan POLRI.DIGITAL.';
-                } else {
-                    response = 'Terima kasih atas pesan Anda. Tim kami akan segera merespon. Jika perlu bantuan segera, silakan hubungi call center kami di +62 21 521 5010.';
-                }
-
-                // Add received message
-                addMessage('received', response, timeString);
             }
 
             // Event listeners
